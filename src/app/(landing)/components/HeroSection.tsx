@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { ROUTES } from '@/lib/routes';
 import { useMovieHomepageQuery } from '@/api/movie';
 import { getImageUrl } from '@/lib/image';
+import { Badge } from '@/components/ui/badge';
 
 const HeroSection = () => {
     const { data } = useMovieHomepageQuery();
@@ -64,29 +65,49 @@ const HeroSection = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-                    className="relative z-10 h-full flex flex-col justify-center px-6 md:px-16 max-w-3xl"
+                    className="relative z-10 h-full flex flex-col justify-center px-6 md:px-16 max-w-3xl gap-4"
                 >
-                    {/* Movie Info */}
-                    <div className="flex items-center gap-3 mb-3">
-                        <span className="bg-yellow-500 text-black px-2 py-0.5 text-xs font-bold rounded">IMDb</span>
-                        <span className="text-white font-semibold text-sm">{currentMovie.imdb?.vote_average?.toFixed(1)}</span>
-                        <span className="text-gray-400">•</span>
-                        <span className="text-gray-300 text-sm">{new Date(currentMovie.modified?.time).getFullYear()}</span>
-                    </div>
 
                     {/* Title */}
-                    <h1 className="text-2xl md:text-4xl xl:text-5xl font-bold text-white mb-3 leading-tight">
+                    <h1 className="text-xl md:text-2xl xl:text-3xl font-bold text-white max-w-md leading-tight font-serif">
                         {currentMovie.name}
                     </h1>
 
-                    {/* Description */}
-                    {/* <p className="text-gray-300 text-sm md:text-base mb-6 line-clamp-2 xl:line-clamp-3 leading-relaxed max-w-2xl">
-                        {currentMovie.}
-                    </p> */}
+                    <h3 className="xl:text-sm text-xs text-secondary-200">
+                        {currentMovie.origin_name}
+                    </h3>
 
+                    {/* Movie Info */}
+                    <div className="flex items-center gap-3">
+                        <Badge className='font-semibold' variant={'outline'}>
+                            <span>IMDb</span>
+                            <span className='text-white'>{currentMovie.imdb?.vote_average ? currentMovie.imdb?.vote_average?.toFixed(1) : currentMovie.tmdb?.vote_average.toFixed(1)}</span>
+                        </Badge>
+                        <Badge className='text-secondary-700' variant={'gradient'}>
+                            {currentMovie?.quality}
+                        </Badge>
+                        <Badge className=' text-white' variant={'outline'}>
+                            {currentMovie?.lang}
+                        </Badge>
+                        <Badge className=' text-white' variant={'outline'}>
+                            {currentMovie?.country[0]?.name}
+                        </Badge>
+                        <Badge className=' text-white' variant={'outline'}>
+                            {currentMovie?.year}
+                        </Badge>
+                    </div>
+                    {currentMovie?.category?.length > 0 &&
+                        <div className="flex items-center gap-3">
+                            {currentMovie?.category?.map((item) => (
+                                <Badge key={item.id} variant={'secondary'}>
+                                    {item?.name}
+                                </Badge>
+                            ))}
+                        </div>
+                    }
                     {/* Buttons */}
                     <div className="flex gap-3">
-                        <Link href={`${ROUTES.MOVIE}/${currentMovie?.slug}`}>
+                        <Link href={`${ROUTES.PHIM}/${currentMovie?.slug}`}>
                             <Button size={'lg'}>
                                 <Play size={18} fill="currentColor" />
                                 <span>{'Xem phim'}</span>

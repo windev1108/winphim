@@ -60,3 +60,7 @@ export function generateSlug(
 
   return str;
 }
+
+export function removeHtml(html: string) {
+  return html.replace(/<[^>]+>/g, "")
+}

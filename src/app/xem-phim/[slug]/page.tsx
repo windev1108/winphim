@@ -10,13 +10,17 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { useMovieDetailQuery } from '@/api/movie';
-import SingleMovieSection from './components/SingleMovieSection';
-import SeriesMovieSection from './components/SeriesMovieSection';
+import { useMovieDetailQuery, useMoviePeoplesQuery } from '@/api/movie';
+import ViewMovieSection from './components/ViewMovieSection';
 
 const WatchingPage = () => {
     const { slug }: { slug: string } = useParams();
     const { data } = useMovieDetailQuery({
+        params: {
+            slug
+        }
+    });
+    const { data: peopleOverview } = useMoviePeoplesQuery({
         params: {
             slug
         }
@@ -33,9 +37,9 @@ const WatchingPage = () => {
 
 
     return (
-        <section className="container min-h-screen py-20">
+        <section className="container min-h-screen xl:pt-20 pt-10">
             {/* Breadcrumb Navigation */}
-            <div className="px-6 py-4">
+            <div className="px-6">
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -67,13 +71,8 @@ const WatchingPage = () => {
                 </Breadcrumb>
             </div>
 
-            {data?.item?.type === 'single' &&
-                <SingleMovieSection movie={data?.item} />
-            }
+            <ViewMovieSection variant={data?.item?.type} movie={data?.item} peopleOverview={peopleOverview!} />
 
-            {data?.item?.type !== 'single' &&
-                <SeriesMovieSection movie={data?.item} />
-            }
         </section>
     );
 };

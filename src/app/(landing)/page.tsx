@@ -9,7 +9,8 @@ export default function Home() {
   return (
     <section className='relative flex flex-col xl:gap-20 gap-10'>
       <HeroSection />
-      <CategoryMovieSection category="hanh-dong" title="Phim bộ mới nhất" />
+      <CategoryMovieSection category="phim-le" title="Phim lẻ mới nhất" />
+      <CategoryMovieSection category="phim-bo" title="Phim bộ mới nhất" />
     </section>
   )
 }

@@ -72,14 +72,14 @@ const Header = () => {
     >
       <div
         className={cn(
-          "relative mx-auto container flex items-center justify-between xl:h-20 h-16 w-full xl:rounded-full shadow-md transition-colors duration-300",
+          "relative mx-auto container flex items-center justify-between xl:h-20 h-16 w-full xl:rounded-full transition-colors duration-300",
           {
             "bg-background": isScrollDown || visibleMenu,
             "shadow-none!": visibleMenu
           }
         )}
       >
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-10 justify-between w-full flex-1">
           <div className="flex items-center gap-4">
             {!isMd && <MenuDrawer opened={visibleMenu} toggle={toggleMenu} />}
 
@@ -89,15 +89,12 @@ const Header = () => {
             </Link>
           </div>
 
-          <div className="relative hidden h-full flex-1 items-center justify-center gap-8 lg:flex">
+          <div className="relative flex-1 hidden h-full items-center justify-center gap-8 lg:flex">
             <NavMenu visibleHeader={visibleHeader} />
           </div>
         </div>
 
-        <div className="flex items-center xl:gap-4 gap-2">
-          <Button className="xl:min-w-[146px] min-w-[113px]">{'Sign up'}</Button>
-          <Button variant="outline" className="xl:min-w-[146px] min-w-[113px]">{'Login'}</Button>
-        </div>
+        <Button variant="outline" className="xl:min-w-[146px] min-w-[113px]">{'Login'}</Button>
       </div>
     </motion.header>
   );

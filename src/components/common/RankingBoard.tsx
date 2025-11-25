@@ -3,7 +3,6 @@ import { Icon, Icons } from '@/assets/icons';
 import { cn } from '@/lib/utils';
 import React from 'react';
 import NumberMotion from '../motion/number-motion';
-import { useTranslations } from 'next-intl';
 
 export interface RankingItem {
     product: string;
@@ -33,7 +32,6 @@ const MAPPING_RANK_PROPERTY: Record<number, { icon: Icon, color: string }> = {
 }
 
 const RankingBoard: React.FC<RankingTableProps> = ({ fullWidth = true, maxWidth = '4xl', data = [] }) => {
-    const t = useTranslations()
     const formatNumber = (num: number): string => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
@@ -49,16 +47,16 @@ const RankingBoard: React.FC<RankingTableProps> = ({ fullWidth = true, maxWidth 
             {/* Header */}
             <div className="flex justify-between gap-6 px-6 py-4 h-10 mb-2">
                 <div className="text-neutral-500 text-xs font-semibold uppercase tracking-wider">
-                    {`${t('no')}.`}
+                    {`No`}
                 </div>
                 <div className="text-neutral-500 text-xs font-semibold uppercase tracking-wider">
-                    {t('products')}
+                    {'Products'}
                 </div>
                 <div className="text-neutral-500 text-xs font-semibold uppercase tracking-wider">
-                    {t('quantity')}
+                    {'Quantity'}
                 </div>
                 <div className="text-neutral-500 text-xs font-semibold uppercase tracking-wider text-right">
-                    {t('price')}
+                    {'Price'}
                 </div>
             </div>
 

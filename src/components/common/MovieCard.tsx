@@ -11,8 +11,16 @@ interface MovieCardProps {
 
 const MovieCard = ({ movie }: MovieCardProps) => {
     return (
-        <Link href={`${ROUTES.MOVIE}/${movie.slug}`} className='relative flex flex-col gap-4 cursor-pointer'>
-            <div className='relative group rounded-xl overflow-hidden w-full bg-secondary-900 shadow-md xl:h-[360px] h-48'>
+        <Link href={`${ROUTES.XEM_PHIM}/${movie.slug}`} className='relative group flex flex-col gap-4 cursor-pointer'>
+            {/* <div className="group-hover:block hidden absolute inset-0 -translate-x-1/2  h-[400px] w-[350px] z-30 bg-secondary-800 shadow-md rounded-md">
+
+            </div> */}
+            {movie?.quality &&
+                <div className="absolute top-2 right-2 z-20">
+                    <Badge className='' variant={'gradient'}>{movie.quality}</Badge>
+                </div>
+            }
+            <div className='relative group rounded-xl overflow-hidden w-full bg-secondary-900 shadow-md xl:h-[360px] h-40'>
                 <Image
                     width={300}
                     height={400}
@@ -21,19 +29,28 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                     className="w-full h-full object-fill group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="group-hover:flex hidden absolute inset-0 bg-secondary-800/60 flex-col gap-2 items-center justify-center">
-                    <div className="flex items-center gap-2">
-                        <span className="bg-yellow-500 text-black px-2 py-0.5 text-xs font-bold rounded">IMDb</span>
-                        <span className="text-white font-semibold text-sm">{movie.imdb?.vote_average ? movie?.imdb?.vote_average?.toFixed(1) : ''}</span>
-                    </div>
+                    <Badge className='text-black font-semibold'>
+                        <span className="">IMDb</span>
+                        <span className="">{movie.imdb?.vote_average ? movie?.imdb?.vote_average : movie?.tmdb?.vote_average}</span>
+                    </Badge>
                     {movie.year &&
                         <Badge variant={'secondary'} >
                             {movie.year}
                         </Badge>
                     }
-                    <span className="text-gray-300 text-sm">{ }</span>
+                    {movie?.category?.length > 0 &&
+                        <div className="flex items-center flex-wrap gap-2">
+                            {movie?.category?.slice(0, 3).map((c) => (
+                                <Badge variant={'secondary'} key={c.id}>{c.name}</Badge>
+                            ))}
+                        </div>
+                    }
                 </div>
             </div>
-            <span className='text-white max-w'>{movie.name}</span>
+            <div className="flex flex-col items-center">
+                <span className='xl:text-lg text-sm text-white'>{movie.name}</span>
+                <span className='text-secondary-300 xl:text-sm text-xs'>{movie.origin_name}</span>
+            </div>
         </Link>
     )
 }

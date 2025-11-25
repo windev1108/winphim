@@ -60,21 +60,7 @@ export interface IMovie {
 
 export type MovieType = 'single' | 'series' | 'hoathinh'
 
-export interface IMovieItem {
-  _id: string
-  name: string
-  slug: string
-  tmdb: Tmdb
-  imdb: Imdb
-  origin_name: string
-  alternative_names: string[]
-  type: MovieType
-  thumb_url: string
-  poster_url: string
-  year: number
-  category: ICategory[]
-  country: ICountry[]
-  modified: IModified
+export interface IMovieItem extends IMovie {
 }
 
 

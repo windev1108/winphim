@@ -47,9 +47,8 @@ interface NavLink {
 }
 
 export const NAV_LINKS: NavLink[] = [
-  { href: ROUTES.HOME, label: 'Home' },
-  { href: ROUTES.MOVIE, label: 'Movies' },
-  { href: ROUTES.TV, label: 'TV Show' },
+  { href: `${ROUTES.PHIM}?the-loai=phim-le`, label: 'Phim lẻ' },
+  { href: `${ROUTES.PHIM}?the-loai=phim-bo`, label: 'Phim bộ' },
 ];
 
 
