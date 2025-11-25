@@ -11,6 +11,7 @@ import { getTMDBImageUrl } from "@/lib/image";
 import ActorsList from "../../../components/common/ActorsList";
 import TextWithTooltip from "@/components/common/TextWithTooltip";
 import SimilarSection from "./components/SimilarSection";
+import MovieInfo from "@/components/common/MovieInfo";
 
 const MovieDetail = () => {
     const { slug }: { slug: string } = useParams();
@@ -72,46 +73,7 @@ const MovieDetail = () => {
 
                 {/* Content */}
                 <div className="container relative z-10 flex flex-col justify-end h-full pt-28 gap-3">
-                    {/* Title and Meta */}
-                    <div className="flex flex-col gap-2">
-                        <h1 className="text-xl xl:text-2xl font-bold text-white max-w-md leading-tight font-serif">
-                            {movie.item?.name}
-                        </h1>
-                        <h3 className="text-base xl:text-sm text-secondary-200 max-w-md  font-serif">
-                            {movie.item?.origin_name}
-                        </h3>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <Badge className='font-semibold' variant={'outline'}>
-                            <span>IMDb</span>
-                            <span className='text-white'>{movie.item?.imdb?.vote_average ? movie.item?.imdb?.vote_average?.toFixed(1) : movie.item?.tmdb?.vote_average.toFixed(1)}</span>
-                        </Badge>
-                        <Badge className='text-secondary-700' variant={'gradient'}>
-                            {movie?.item?.quality}
-                        </Badge>
-                        <Badge className=' text-white' variant={'outline'}>
-                            {movie?.item?.lang}
-                        </Badge>
-                        <Badge className=' text-white' variant={'outline'}>
-                            {movie?.item?.country[0]?.name}
-                        </Badge>
-                        <Badge className=' text-white' variant={'outline'}>
-                            {movie?.item?.year}
-                        </Badge>
-                    </div>
-                    {movie?.item?.category?.length > 0 &&
-                        <div className="flex items-center gap-3">
-                            {movie?.item?.category?.map((item) => (
-                                <Badge key={item.id} variant={'secondary'}>
-                                    {item?.name}
-                                </Badge>
-                            ))}
-                        </div>
-                    }
-                    {/* Description */}
-                    <TextWithTooltip maxLength={245} className="max-w-xl text-secondary-200 text-sm" html={movie?.item?.content} />
-
+                    <MovieInfo movie={movie?.item} />
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-4">

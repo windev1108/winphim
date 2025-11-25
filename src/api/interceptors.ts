@@ -10,7 +10,5 @@ export const errorInterceptor = async (error: AxiosError): Promise<never> => {
 };
 
 export const requestInterceptor = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-  config.headers.set('Authorization', `Bearer ${env.NEXT_PUBLIC_TMDB_API_KEY}`);
-  config.headers.set('accept', 'application/json')
   return config;
 };

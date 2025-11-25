@@ -9,6 +9,7 @@ import { ROUTES } from '@/lib/routes';
 import { useMovieHomepageQuery } from '@/api/movie';
 import { getImageUrl } from '@/lib/image';
 import { Badge } from '@/components/ui/badge';
+import MovieInfo from '@/components/common/MovieInfo';
 
 const HeroSection = () => {
     const { data } = useMovieHomepageQuery();
@@ -68,43 +69,9 @@ const HeroSection = () => {
                     className="relative z-10 h-full flex flex-col justify-center px-6 md:px-16 max-w-3xl gap-4"
                 >
 
-                    {/* Title */}
-                    <h1 className="text-xl md:text-2xl xl:text-3xl font-bold text-white max-w-md leading-tight font-serif">
-                        {currentMovie.name}
-                    </h1>
+                    <MovieInfo movie={currentMovie} />
 
-                    <h3 className="xl:text-sm text-xs text-secondary-200">
-                        {currentMovie.origin_name}
-                    </h3>
 
-                    {/* Movie Info */}
-                    <div className="flex items-center gap-3">
-                        <Badge className='font-semibold' variant={'outline'}>
-                            <span>IMDb</span>
-                            <span className='text-white'>{currentMovie.imdb?.vote_average ? currentMovie.imdb?.vote_average?.toFixed(1) : currentMovie.tmdb?.vote_average.toFixed(1)}</span>
-                        </Badge>
-                        <Badge className='text-secondary-700' variant={'gradient'}>
-                            {currentMovie?.quality}
-                        </Badge>
-                        <Badge className=' text-white' variant={'outline'}>
-                            {currentMovie?.lang}
-                        </Badge>
-                        <Badge className=' text-white' variant={'outline'}>
-                            {currentMovie?.country[0]?.name}
-                        </Badge>
-                        <Badge className=' text-white' variant={'outline'}>
-                            {currentMovie?.year}
-                        </Badge>
-                    </div>
-                    {currentMovie?.category?.length > 0 &&
-                        <div className="flex items-center gap-3">
-                            {currentMovie?.category?.map((item) => (
-                                <Badge key={item.id} variant={'secondary'}>
-                                    {item?.name}
-                                </Badge>
-                            ))}
-                        </div>
-                    }
                     {/* Buttons */}
                     <div className="flex gap-3">
                         <Link href={`${ROUTES.PHIM}/${currentMovie?.slug}`}>
