@@ -1,0 +1,17 @@
+import { server } from "@/api/server";
+import { NextResponse } from "next/server";
+
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const slug = searchParams.get('slug')
+    const { data } = await server({
+      url: `/phim/${slug}/images`,
+      method: "GET",
+    });
+
+    return NextResponse.json(data);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
