@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { ROUTES } from '@/lib/routes';
 import { useMovieHomepageQuery } from '@/api/movie';
 import { getImageUrl } from '@/lib/image';
-import { Badge } from '@/components/ui/badge';
 import MovieInfo from '@/components/common/MovieInfo';
 
 const HeroSection = () => {

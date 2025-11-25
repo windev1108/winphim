@@ -3,7 +3,6 @@ import CarouselSkeleton from '@/components/common/CarouselSkeleton'
 import CarouselWithControls from '@/components/common/CarouselWithControls'
 import MovieCard from '@/components/common/MovieCard'
 import { useIntersection, useIsMobile } from '@/hooks'
-import { ICategory } from '@/types/common'
 
 interface MovieCategorySectionProps {
     category: string
