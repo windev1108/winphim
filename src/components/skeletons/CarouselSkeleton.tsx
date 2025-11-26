@@ -1,5 +1,6 @@
 import { Fragment } from 'react/jsx-runtime'
 import { Skeleton } from '../ui/skeleton'
+import MovieCardSkeleton from './MovieCardSkeleton'
 
 interface SkeletonRowSectionProps {
   variant?: 'movie' | 'actor'
@@ -13,10 +14,7 @@ const SkeletonRowSection = ({ variant = 'movie' }: SkeletonRowSectionProps) => {
         {Array.from({ length: 6 }).map((_, i) => (
           <Fragment key={i}>
             {variant === 'movie' ?
-              <div className='flex flex-col gap-4 xl:h-[360px] h-48 xl:w-[255.98px] w-[138px] '>
-                <Skeleton className='flex-1 overflow-hidden rounded-lg w-full cursor-pointer' />
-                <Skeleton className='h-4 w-1/2' />
-              </div>
+              <MovieCardSkeleton />
               :
               <div className='flex flex-col gap-4 items-center justify-center'>
                 <Skeleton className='w-40 h-40 rounded-full' />

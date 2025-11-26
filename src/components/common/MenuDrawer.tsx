@@ -2,15 +2,36 @@
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '../ui/drawer'
 import { motion } from 'motion/react'
 import { usePathname } from 'next/navigation';
-import { NAV_LINKS } from '../Layout/NavMenu';
 import { cn, getOrigin } from '@/lib/utils';
 import Link from 'next/link';
 import BurgerMotion from '../motion/burger-motion';
 import { useDeferredValue } from 'react';
+import { ROUTES } from '@/lib/routes';
+
+interface NavLinkItem {
+  href: string;
+  label: string;
+}
+
+
+interface NavLink {
+  href: string;
+  label: string;
+  items?: NavLinkItem[];
+}
+
+
+export const NAV_LINKS: NavLink[] = [
+  { href: `${ROUTES.PHIM}?category-phim-le`, label: 'Phim lẻ' },
+  { href: `${ROUTES.PHIM}?category-phim-bo`, label: 'Phim bộ' },
+  { href: `${ROUTES.PHIM}?category-phim-chieu-rap`, label: 'Phim chiếu rạp' },
+];
+
 
 const MenuDrawer = ({ className, opened, toggle }: { className?: string, opened: boolean, toggle: () => void }) => {
   const pathname = usePathname();
   const openedDeferred = useDeferredValue(opened)
+
   return (
     <Drawer open={openedDeferred} onOpenChange={toggle}>
       <DrawerTrigger>
@@ -41,7 +62,7 @@ const MenuDrawer = ({ className, opened, toggle }: { className?: string, opened:
                     className
                   )}
                 >
-                  <span className='text-sm'>{link.label.toLowerCase()}</span>
+                  <span className='text-sm'>{link.label}</span>
                 </Link>
 
               </div>

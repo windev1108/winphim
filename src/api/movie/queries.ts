@@ -1,8 +1,8 @@
 import { createQuery } from "@/lib/query";
 import { getMovieDetailRequest, getMovieHomepageRequest, getMovieImagesRequest, getMovieListRequest, getMoviePeoplesRequest } from "./requests";
-import { UseQueryOptions } from "@tanstack/react-query";
+import { useInfiniteQuery, UseQueryOptions } from "@tanstack/react-query";
 import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieListParams, IMovieListResponse, IImageOverview, IMovieImagesParams, IMoviePeopleParams, IPeopleOverview } from "./types";
-import { UseQueryParams } from "@/types/common";
+import { InfiniteQueryOptionsWithoutKeys, UseQueryParams } from "@/types/common";
 
 // MOVIE LIST
 export const useMovieHomepageQuery = (options?: UseQueryOptions<IMovieHomePageResponse>) => createQuery({
@@ -40,30 +40,3 @@ export const useMoviePeoplesQuery = ({ options, params }: UseQueryParams<IMovieP
   params,
   options: { staleTime: 5000, ...options }
 });
-
-
-
-// INFINITY MOVIE LIST
-// export const useInfinityMovies = (
-//   params: IGetMovieListParams,
-//   options?: InfiniteQueryOptionsWithoutKeys<IGetMovieListResponse>
-// ) => {
-//   return useInfiniteQuery<IGetMovieListResponse>({
-//     queryKey: ["/movie/list/infinity", params],
-//     initialPageParam: 1,
-//     queryFn: ({ pageParam }) =>
-//       getMoviesListRequest({
-//         ...params,
-//         page: Number(pageParam)
-//       }),
-
-//     getNextPageParam: (lastPage) => {
-//       const { currentPage, totalPages } = lastPage.pagination ?? {};
-//       return currentPage && totalPages && currentPage < totalPages
-//         ? currentPage + 1
-//         : undefined;
-//     },
-
-//     ...options
-//   });
-// };

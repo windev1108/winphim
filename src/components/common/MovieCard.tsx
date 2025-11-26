@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Badge } from '../ui/badge'
 import Image from 'next/image'
 import { getImageUrl } from '@/lib/image'
+import TextWithTooltip from './TextWithTooltip'
 
 interface MovieCardProps {
     movie: IMovieItem
@@ -11,7 +12,7 @@ interface MovieCardProps {
 
 const MovieCard = ({ movie }: MovieCardProps) => {
     return (
-        <Link href={`${ROUTES.XEM_PHIM}/${movie.slug}`} className='relative group flex flex-col gap-4 cursor-pointer'>
+        <Link href={`${ROUTES.PHIM}/${movie.slug}`} className='relative group flex flex-col gap-4 cursor-pointer'>
             {/* <div className="group-hover:block hidden absolute inset-0 -translate-x-1/2  h-[400px] w-[350px] z-30 bg-secondary-800 shadow-md rounded-md">
 
             </div> */}
@@ -20,7 +21,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                     <Badge className='' variant={'gradient'}>{movie.quality}</Badge>
                 </div>
             }
-            <div className='relative group rounded-xl overflow-hidden w-full bg-secondary-900 shadow-md xl:h-[360px] h-40'>
+            <div className='relative group rounded-xl overflow-hidden w-full xl:h-[300px] h-[200px] bg-secondary-900 shadow-md'>
                 <Image
                     width={300}
                     height={400}
@@ -48,8 +49,12 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 </div>
             </div>
             <div className="flex flex-col items-center">
-                <span className='xl:text-lg text-sm text-white'>{movie.name}</span>
-                <span className='text-secondary-300 xl:text-sm text-xs'>{movie.origin_name}</span>
+                <TextWithTooltip maxLength={20}>
+                    {movie.name}
+                </TextWithTooltip>
+                <TextWithTooltip maxLength={20} className='text-secondary-300 xl:text-sm text-xs'>
+                    {movie.origin_name}
+                </TextWithTooltip>
             </div>
         </Link>
     )

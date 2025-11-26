@@ -35,11 +35,11 @@ export default function TextWithTooltip({
     if (!isOverflow) {
         return html ? (
             <span
-                className={cn("break-words whitespace-normal", className)}
+                className={cn("wrap-break-word whitespace-normal", className)}
                 dangerouslySetInnerHTML={{ __html: html }}
             />
         ) : (
-            <span className={cn("break-words whitespace-normal", className)}>
+            <span className={cn("wrap-break-word whitespace-normal", className)}>
                 {children}
             </span>
         )
@@ -52,7 +52,7 @@ export default function TextWithTooltip({
                 <TooltipTrigger asChild>
                     <span
                         className={cn(
-                            "break-words whitespace-normal cursor-help inline-block",
+                            "wrap-break-word whitespace-normal cursor-help inline-block",
                             className
                         )}
                         {...(html
@@ -65,7 +65,7 @@ export default function TextWithTooltip({
 
                 <TooltipContent
                     side={side}
-                    className={cn("max-w-[320px] break-words whitespace-normal", tooltipClassName)}
+                    className={cn("max-w-[320px] wrap-break-word whitespace-normal", tooltipClassName)}
                 >
                     {html ? <div dangerouslySetInnerHTML={{ __html: html }} /> : raw}
                 </TooltipContent>

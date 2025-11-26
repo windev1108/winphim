@@ -54,7 +54,7 @@ const MovieDetail = () => {
     return (
         <section className="flex flex-col min-h-screen">
             {/* Hero Section */}
-            <div className="relative p-8 pt-16 flex flex-col bg-secondary-800 min-h-[500px] w-full  overflow-hidden">
+            <div className="relative p-8 pt-16 flex flex-col bg-secondary-800 h-[500px]  w-full  overflow-hidden">
                 {/* Background Image */}
                 {movie?.item?.poster_url && (
                     <div className="absolute inset-0 z-0">
@@ -72,7 +72,7 @@ const MovieDetail = () => {
                 )}
 
                 {/* Content */}
-                <div className="container relative z-10 flex flex-col justify-end h-full pt-28 gap-3">
+                <div className="container relative z-10 flex flex-col justify-center h-full xl:pt-28 pt-8 gap-3 xl:px-8! px-0!">
                     <MovieInfo movie={movie?.item} />
 
                     {/* Action Buttons */}

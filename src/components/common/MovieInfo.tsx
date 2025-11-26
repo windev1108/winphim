@@ -34,14 +34,20 @@ const MovieInfo = ({ movie }: IMovieInfoProps) => {
                 <Badge className=' text-white' variant={'outline'}>
                     {movie?.lang}
                 </Badge>
-                <Badge className=' text-white' variant={'outline'}>
-                    {movie?.country[0]?.name}
-                </Badge>
+
                 <Badge className=' text-white' variant={'outline'}>
                     {movie?.year}
                 </Badge>
             </div>
-
+            {movie?.country?.length > 0 &&
+                <div className="flex items-center gap-3 flex-wrap">
+                    {movie?.country?.map((item) => (
+                        <Badge key={item.id} variant={'outline'} className='text-secondary-100'>
+                            {item?.name}
+                        </Badge>
+                    ))}
+                </div>
+            }
             {movie?.category?.length > 0 &&
                 <div className="flex items-center gap-3 flex-wrap">
                     {movie?.category?.map((item) => (

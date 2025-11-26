@@ -7,10 +7,10 @@ import { useDisclosure } from '@/hooks';
 import { useIsMd } from '@/hooks/useMediaQuery';
 import { ROUTES } from '@/lib/routes';
 import { cn } from '@/lib/utils';
-import NavMenu from './NavMenu';
 import { Icons } from '@/assets/icons';
 import { Button } from '../ui/button';
-import MenuDrawer from '../dialogs/MenuDrawer';
+import NavMenu from './NavMenu';
+import MenuDrawer from '../common/MenuDrawer';
 
 const customEase: Easing = [0.76, 0, 0.24, 1];
 
@@ -90,11 +90,11 @@ const Header = () => {
           </div>
 
           <div className="relative flex-1 hidden h-full items-center justify-center gap-8 lg:flex">
-            <NavMenu visibleHeader={visibleHeader} />
+            <NavMenu />
           </div>
         </div>
 
-        <Button variant="outline" className="xl:min-w-[146px] min-w-[113px]">{'Login'}</Button>
+        <Button className="xl:min-w-[146px] min-w-[113px] rounded-full">{'Login'}</Button>
       </div>
     </motion.header>
   );

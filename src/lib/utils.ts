@@ -64,3 +64,16 @@ export function generateSlug(
 export function removeHtml(html: string) {
   return html.replace(/<[^>]+>/g, "")
 }
+
+export const createQueryString = (key: string, value: string) => {
+  const params = new URLSearchParams(value.toString())
+  params.set(key, value.toString())
+  return params
+}
+
+export function calculateTotalPages(totalItems: number, itemsPerPage: number) {
+  if (totalItems <= 0) {
+    return 0;
+  }
+  return Math.ceil(totalItems / itemsPerPage);
+}

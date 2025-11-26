@@ -49,7 +49,8 @@ export interface IPagination {
   currentPage: number,
   totalItems: number,
   totalItemsPerPage: number,
-  totalPages: number
+  totalPages?: number
+  pageRanges: number
 }
 
 

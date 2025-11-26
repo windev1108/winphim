@@ -1,7 +1,7 @@
 'use client';
 
-import { QueryOptionsWithoutKeys } from "@/types/common";
-import { useQuery } from "@tanstack/react-query";
+import { InfiniteQueryOptionsWithoutKeys, IPagination, QueryOptionsWithoutKeys, UseQueryInfinityParams } from "@/types/common";
+import { InfiniteData, QueryFunctionContext, useInfiniteQuery, useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { useCallback } from "react";
 
 interface CreateQueryProps<TParams, TResponse> {
@@ -28,3 +28,6 @@ export function createQuery<
         ...options,
     });
 }
+
+
+

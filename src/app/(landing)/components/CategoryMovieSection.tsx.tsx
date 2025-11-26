@@ -1,5 +1,5 @@
 import { useMovieListQuery } from '@/api/movie'
-import CarouselSkeleton from '@/components/common/CarouselSkeleton'
+import CarouselSkeleton from '@/components/skeletons/CarouselSkeleton'
 import CarouselWithControls from '@/components/common/CarouselWithControls'
 import MovieCard from '@/components/common/MovieCard'
 import { useIntersection, useIsMobile } from '@/hooks'

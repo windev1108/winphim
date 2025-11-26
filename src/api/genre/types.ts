@@ -1,8 +1,8 @@
-import { IDataResponse } from "@/types/common";
+import { IListDataResponse } from "@/types/common";
 
 export type GenreType = 'movie' | 'tv' | 'person' | 'all';
 
-export interface IGenreListResponse extends IDataResponse<IGenre> {
+export interface IGenreListResponse extends IListDataResponse<IGenre> {
 }
 
 export interface IGenre {
