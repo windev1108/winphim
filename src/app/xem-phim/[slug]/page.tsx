@@ -13,6 +13,7 @@ import {
 import { useMovieDetailQuery, useMoviePeoplesQuery } from '@/api/movie';
 import ViewMovieSection from './components/ViewMovieSection';
 import { useEffect } from 'react';
+import { ROUTES } from '@/lib/routes';
 
 const WatchingPage = () => {
     const { slug }: { slug: string } = useParams();
@@ -53,7 +54,7 @@ const WatchingPage = () => {
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
                                 <Link href="/" className="text-gray-400 hover:text-white transition-colors">
-                                    Home
+                                    Trang chủ
                                 </Link>
                             </BreadcrumbLink>
                         </BreadcrumbItem>
@@ -62,8 +63,8 @@ const WatchingPage = () => {
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
-                                <Link href="/movies" className="text-gray-400 hover:text-white transition-colors">
-                                    Movies
+                                <Link href={`${ROUTES.PHIM}?category=${data?.breadCrumb?.[0]?.slug.split('/')[2]}`} className="text-gray-400 hover:text-white transition-colors">
+                                    {`Phim ${data?.breadCrumb?.[0]?.name.replace('Phim', '')}`}
                                 </Link>
                             </BreadcrumbLink>
                         </BreadcrumbItem>
