@@ -1,5 +1,5 @@
 import { client } from "../client"
-import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieImagesParams, IMovieListParams, IMovieListResponse, IMoviePeopleParams, IImageOverview, IPeopleOverview } from "./types";
+import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieImagesParams, IMovieListParams, IMovieListResponse, IMoviePeopleParams, IImageOverview, IPeopleOverview, ISearchMovieListParams } from "./types";
 
 
 export const getMovieHomepageRequest = async (): Promise<IMovieHomePageResponse> => {
@@ -13,9 +13,18 @@ export const getMovieHomepageRequest = async (): Promise<IMovieHomePageResponse>
 
 export const getMovieListRequest = async (params: IMovieListParams): Promise<IMovieListResponse> => {
     const { data } = await client({
-        url: `/movie/list`,
+        url: '/movie/list',
         method: 'GET',
-        params: params
+        params
+    });
+    return data?.data
+};
+
+export const searchMovieListRequest = async (params: ISearchMovieListParams): Promise<IMovieListResponse> => {
+    const { data } = await client({
+        url: '/movie/search',
+        method: 'GET',
+        params
     });
     return data?.data
 };
@@ -23,7 +32,7 @@ export const getMovieListRequest = async (params: IMovieListParams): Promise<IMo
 
 export const getMovieDetailRequest = async (params: IMovieDetailParams): Promise<IMovieDetailResponse> => {
     const { data } = await client({
-        url: `/movie/detail`,
+        url: '/movie/detail',
         method: 'GET',
         params: params
     });
@@ -33,7 +42,7 @@ export const getMovieDetailRequest = async (params: IMovieDetailParams): Promise
 
 export const getMovieImagesRequest = async (params: IMovieImagesParams): Promise<IImageOverview> => {
     const { data } = await client({
-        url: `/movie/images`,
+        url: '/movie/images',
         method: 'GET',
         params: params
     });
@@ -43,10 +52,12 @@ export const getMovieImagesRequest = async (params: IMovieImagesParams): Promise
 
 export const getMoviePeoplesRequest = async (params: IMoviePeopleParams): Promise<IPeopleOverview> => {
     const { data } = await client({
-        url: `/movie/peoples`,
+        url: '/movie/peoples',
         method: 'GET',
         params: params
     });
     return data?.data
 };
+
+
 

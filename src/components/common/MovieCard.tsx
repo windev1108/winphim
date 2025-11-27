@@ -21,7 +21,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                     <Badge className='' variant={'gradient'}>{movie.quality}</Badge>
                 </div>
             }
-            <div className='relative group rounded-xl overflow-hidden w-full xl:h-[300px] h-[200px] bg-secondary-900 shadow-md'>
+            <div className='relative group rounded-xl overflow-hidden w-full xl:h-[280px] h-[200px] bg-secondary-900 shadow-md'>
                 <Image
                     width={300}
                     height={400}
@@ -49,7 +49,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 </div>
             </div>
             <div className="flex flex-col items-center">
-                <TextWithTooltip maxLength={20}>
+                <TextWithTooltip maxLength={18}>
                     {movie.name}
                 </TextWithTooltip>
                 <TextWithTooltip maxLength={20} className='text-secondary-300 xl:text-sm text-xs'>

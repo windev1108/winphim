@@ -11,27 +11,9 @@ export const IMAGES = {
     HERO: '/images/landing/banner.webp',
 }
 
-export const category = {
-    movie: 'movie',
-    tv: 'tv',
-    all: 'all'
-}
+export const MAPPING_QUERY_FIELDS: Record<string, string> = {
+    newest: '_id',
+    newly_updated: 'modified.time',
+    imdb: 'year'
 
-export const movieType = {
-    upcoming: 'upcoming',
-    popular: 'popular',
-    top_rated: 'top_rated',
-    now_playing: 'now_playing',
-    // trending: 'trending'
-}
-
-export const tvType = {
-    popular: 'popular',
-    top_rated: 'top_rated',
-    on_the_air: 'on_the_air'
-}
-
-export const timeWindow = {
-    day: "day",
-    week: "week",
 }

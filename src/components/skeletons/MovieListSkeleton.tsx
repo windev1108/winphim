@@ -3,15 +3,14 @@ import MovieCardSkeleton from './MovieCardSkeleton'
 
 const MovieListSkeleton = () => {
     return (
-        <section className='relative container py-20'>
-            <Skeleton className='xl:w-52 w-1/3 h-8' />
+        <section className='relative'>
             <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 grid-cols-2  mt-6 gap-6">
-                {Array.from({ length: 32 }).map((_, i) => (
+                {Array.from({ length: 16 }).map((_, i) => (
                     <MovieCardSkeleton key={i} />
                 ))}
             </div>
-            <div className='flex items-center justify-center mt-10'>
-                <Skeleton className='xl:w-52 w-1/3 h-12' />
+            <div className='flex items-center justify-center mt-6'>
+                <Skeleton className='xl:w-[258.92px] w-1/3 h-10' />
             </div>
         </section>
     )

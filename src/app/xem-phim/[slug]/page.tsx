@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { useMovieDetailQuery, useMoviePeoplesQuery } from '@/api/movie';
 import ViewMovieSection from './components/ViewMovieSection';
+import { useEffect } from 'react';
 
 const WatchingPage = () => {
     const { slug }: { slug: string } = useParams();
@@ -25,6 +26,13 @@ const WatchingPage = () => {
             slug
         }
     });
+
+
+    useEffect(() => {
+        if (data?.seoOnPage?.titleHead) {
+            document.title = data?.seoOnPage?.titleHead;
+        }
+    }, [data?.item]);
 
 
     if (!data?.item) {

@@ -1,7 +1,7 @@
 import { createQuery } from "@/lib/query";
-import { getMovieDetailRequest, getMovieHomepageRequest, getMovieImagesRequest, getMovieListRequest, getMoviePeoplesRequest } from "./requests";
+import { getMovieDetailRequest, getMovieHomepageRequest, getMovieImagesRequest, getMovieListRequest, getMoviePeoplesRequest, searchMovieListRequest } from "./requests";
 import { useInfiniteQuery, UseQueryOptions } from "@tanstack/react-query";
-import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieListParams, IMovieListResponse, IImageOverview, IMovieImagesParams, IMoviePeopleParams, IPeopleOverview } from "./types";
+import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieListParams, IMovieListResponse, IImageOverview, IMovieImagesParams, IMoviePeopleParams, IPeopleOverview, ISearchMovieListParams } from "./types";
 import { InfiniteQueryOptionsWithoutKeys, UseQueryParams } from "@/types/common";
 
 // MOVIE LIST
@@ -19,6 +19,12 @@ export const useMovieListQuery = ({ options, params }: UseQueryParams<IMovieList
   options: { staleTime: 5000, ...options }
 });
 
+export const useSearchMovieListQuery = ({ options, params }: UseQueryParams<ISearchMovieListParams, IMovieListResponse>) => createQuery({
+  key: "movie/search",
+  queryFn: searchMovieListRequest,
+  params,
+  options: { staleTime: 5000, ...options }
+});
 
 export const useMovieDetailQuery = ({ options, params }: UseQueryParams<IMovieDetailParams, IMovieDetailResponse>) => createQuery({
   key: "movie/detail",

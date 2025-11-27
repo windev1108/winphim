@@ -73,16 +73,18 @@ const HeroSection = () => {
 
                     {/* Buttons */}
                     <div className="flex gap-3">
-                        <Link href={`${ROUTES.PHIM}/${currentMovie?.slug}`}>
+                        <Link href={`${ROUTES.XEM_PHIM}/${currentMovie?.slug}`}>
                             <Button size={'lg'}>
                                 <Play size={18} fill="currentColor" />
                                 <span>{'Xem phim'}</span>
                             </Button>
                         </Link>
-                        <Button variant={'outline'} size={'lg'}>
-                            <Info size={18} />
-                            <span>{'More info'}</span>
-                        </Button>
+                        <Link href={`${ROUTES.PHIM}/${currentMovie?.slug}`}>
+                            <Button variant={'outline'} size={'lg'}>
+                                <Info size={18} />
+                                <span>{'More info'}</span>
+                            </Button>
+                        </Link>
                     </div>
                 </motion.div>
             </AnimatePresence>

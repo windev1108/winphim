@@ -4,28 +4,34 @@ import FilterMenu from '@/components/common/FilterMenu';
 import MovieCard from '@/components/common/MovieCard'
 import { PaginationControl } from '@/components/common/PaginationControl';
 import MovieListSkeleton from '@/components/skeletons/MovieListSkeleton';
+import { MAPPING_QUERY_FIELDS } from '@/lib/constants';
 import { calculateTotalPages } from '@/lib/utils';
 import { SortFieldType } from '@/types/common';
-import { useSearchParams, useRouter } from 'next/navigation'; // <-- Import useRouter
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const PhimPage = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
+
+    // Lấy tất cả params từ URL
     const category = searchParams.get('category') ?? ''
     const genre = searchParams.get('genre') ?? ''
     const country = searchParams.get('country') ?? ''
+    const year = searchParams.get('year') ?? ''
     const currentPage = searchParams.get('page') || 1
     const sortField = searchParams.get('sort_filed') || 'modified.time'
 
-    // 3. Gọi API với các params hiện tại
+    // Gọi API với các params
     const { data, isFetching } = useMovieListQuery({
         params: {
             slug: category,
             category: genre,
             country,
+            year: year !== 'all' ? year : '',
             page: +currentPage,
-            sort_field: sortField as SortFieldType,
-            limit: 32,
+            sort_field: MAPPING_QUERY_FIELDS[sortField] as SortFieldType,
+            limit: 16,
         }
     })
 
@@ -38,23 +44,39 @@ const PhimPage = () => {
         router.push(`?${params.toString()}`)
     }
 
+    const totalPages = data?.params?.pagination?.totalPages
+        ? data?.params?.pagination?.totalPages
+        : calculateTotalPages(
+            data?.params?.pagination?.totalItems!,
+            data?.params?.pagination?.totalItemsPerPage!
+        )
 
-    const totalPages = data?.params?.pagination?.totalPages ? data?.params?.pagination?.totalPages : calculateTotalPages(data?.params?.pagination?.totalItems!, data?.params?.pagination?.totalItemsPerPage!)
 
-    if (isFetching) return <MovieListSkeleton />
+    useEffect(() => {
+        if (data?.seoOnPage?.titleHead) {
+            document.title = data?.seoOnPage?.titleHead;
+        }
+    }, [data?.titlePage]);
+
     return (
-        <section className='relative container py-20'>
-            <div className="flex items-center justify-between">
-                <h1 className='xl:text-2xl text-base font-semibold text-primary'>{data?.titlePage ?? 'Phim'}</h1>
+        <section className='relative container py-20 min-h-screen'>
+            {/* Filter Menu */}
+            <div className="flex items-center justify-between mb-6">
+                <h1 className='text-xl font-medium text-primary'>{data?.titlePage ?? ''}</h1>
                 <FilterMenu />
             </div>
-            <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 grid-cols-2 mt-6 gap-6">
-                {data?.items?.map((item) => (
-                    <MovieCard key={item._id} movie={item} /> // <-- Luôn thêm 'key'
-                ))}
-            </div>
+            {isFetching ?
+                <MovieListSkeleton />
+                :
+                <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-6">
+                    {data?.items?.map((item) => (
+                        <MovieCard key={item._id} movie={item} />
+                    ))}
+                </div>
+            }
+            {/* Phân trang */}
             {totalPages > 1 && (
-                <div className='flex items-center justify-center mt-10'>
+                <div className='flex items-center justify-center mt-6'>
                     <PaginationControl
                         isControlByInput
                         totalPages={totalPages}
@@ -62,6 +84,15 @@ const PhimPage = () => {
                         onPageChange={handlePageChange}
                         siblingCount={1}
                     />
+                </div>
+            )}
+
+            {/* Hiển thị khi không có kết quả */}
+            {data?.items?.length === 0 && (
+                <div className="text-center py-20">
+                    <p className="text-zinc-400 text-lg">
+                        Không tìm thấy phim nào phù hợp với bộ lọc của bạn
+                    </p>
                 </div>
             )}
         </section>

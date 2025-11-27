@@ -128,7 +128,7 @@ export function PaginationControl({
                         })}
                     </>
                     :
-                    <PaginationItem className="hidden sm:flex mx-2 items-center gap-2">
+                    <PaginationItem className="flex mx-2 items-center gap-2">
                         <span className="text-sm">Trang</span>
                         <Input
                             className="text-center ring-none outline-none w-14 h-8 focus-visible:ring-0"

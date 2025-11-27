@@ -9,6 +9,10 @@ export interface IMovieListParams extends Partial<IMovieListQuery> {
   slug: string
 };
 
+export interface ISearchMovieListParams {
+  keyword?: string
+}
+
 export interface IMovieDetailParams {
   slug: string
 }

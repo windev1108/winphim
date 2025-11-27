@@ -12,6 +12,7 @@ import ActorsList from "../../../components/common/ActorsList";
 import TextWithTooltip from "@/components/common/TextWithTooltip";
 import SimilarSection from "./components/SimilarSection";
 import MovieInfo from "@/components/common/MovieInfo";
+import { useEffect } from "react";
 
 const MovieDetail = () => {
     const { slug }: { slug: string } = useParams();
@@ -42,6 +43,12 @@ const MovieDetail = () => {
         }
     },
     )
+
+    useEffect(() => {
+        if (movie?.seoOnPage?.titleHead) {
+            document.title = movie?.seoOnPage?.titleHead;
+        }
+    }, [movie?.seoOnPage?.titleHead]);
 
     if (!movie?.item) {
         return (
