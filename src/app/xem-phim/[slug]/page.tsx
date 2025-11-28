@@ -14,6 +14,9 @@ import { useMovieDetailQuery, useMoviePeoplesQuery } from '@/api/movie';
 import ViewMovieSection from './components/ViewMovieSection';
 import { useEffect } from 'react';
 import { ROUTES } from '@/lib/routes';
+import Image from 'next/image';
+import { getImageUrl } from '@/lib/image';
+import TextWithTooltip from '@/components/common/TextWithTooltip';
 
 const WatchingPage = () => {
     const { slug }: { slug: string } = useParams();
@@ -46,9 +49,14 @@ const WatchingPage = () => {
 
 
     return (
-        <section className="container min-h-screen xl:pt-20 pt-10">
+        <section className="relative container min-h-screen pt-20 ">
+            <div className="fixed inset-0">
+                <div className="absolute inset-0 bg-background/80 backdrop-blur-md">
+                </div>
+                <Image alt={data?.item?.name} src={getImageUrl(data?.item?.poster_url)} width={1200} height={1000} className='w-full h-full' />
+            </div>
             {/* Breadcrumb Navigation */}
-            <div className="px-6">
+            <div className="relative z-10">
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -73,7 +81,9 @@ const WatchingPage = () => {
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
                             <BreadcrumbPage className="text-white font-medium">
-                                {data?.item?.name}
+                                <TextWithTooltip maxLength={50}>
+                                    {data?.item?.name}
+                                </TextWithTooltip>
                             </BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>

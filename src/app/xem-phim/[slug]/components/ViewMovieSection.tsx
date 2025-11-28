@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/lib/routes';
 import { redirect, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface ViewMovieSectionProps {
     movie: IMovie
@@ -21,17 +21,18 @@ const ViewMovieSection = ({ variant = 'series', movie, peopleOverview }: ViewMov
     const searchParams = useSearchParams()
     const epQuery = searchParams.get('ep') ?? '1'
     const [serverSelected, setServerSelected] = useState(0)
+    const movieColRef = useRef<HTMLDivElement | null>(null)
 
     const currentServer = movie?.episodes[serverSelected]
     const currentEpisode = currentServer.server_data?.find((x) => x.name === epQuery) ?? currentServer.server_data[0]
 
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-col z-10'>
             {/* Video Player Section */}
             <div className="grid grid-cols-10 gap-4 mt-4">
-                <div className="xl:col-span-8 col-span-10 relative w-full">
+                <div ref={movieColRef} className="xl:col-span-8 col-span-10 relative w-full">
                     {/* Video Player Placeholder */}
-                    <div className='xl:h-[680px] md:h-[400px] h-[200px] bg-secondary-800'>
+                    <div className='xl:h-[680px] md:h-[400px] h-[250px] bg-secondary-800'>
                         {currentEpisode?.link_embed && currentEpisode?.link_m3u8 ? (
                             <iframe
                                 allowFullScreen
@@ -43,7 +44,7 @@ const ViewMovieSection = ({ variant = 'series', movie, peopleOverview }: ViewMov
                         )}
                     </div>
 
-                    <div className="flex flex-col gap-6 py-6">
+                    <div className="flex flex-col gap-6 p-4 rounded-xl mt-4 backdrop-blur-3xl bg-background/50">
                         {/* SERVER button */}
                         <div className="flex items-center flex-wrap max-w-xl gap-2">
                             {movie?.episodes?.map((item, index) => (
@@ -67,7 +68,12 @@ const ViewMovieSection = ({ variant = 'series', movie, peopleOverview }: ViewMov
                     </div>
 
                 </div>
-                <div className="xl:col-span-2 col-span-10">
+                <div
+                    onWheel={(e) => e.stopPropagation()}
+                    className={`xl:col-span-2 col-span-10 z-10 backdrop-blur-3xl overflow-y-auto rounded-xl bg-background/50`}
+                    style={{
+                        maxHeight: movieColRef.current?.clientHeight
+                    }}>
                     <SimilarSection variant='watching' category={movie?.category?.map((x) => x.slug).join(',')} currentMovie={movie} />
                 </div>
             </div >

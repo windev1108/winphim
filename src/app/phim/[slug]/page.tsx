@@ -7,14 +7,18 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ROUTES } from "@/lib/routes";
 import { useMovieDetailQuery, useMovieImagesQuery, useMoviePeoplesQuery } from "@/api/movie";
-import { getTMDBImageUrl } from "@/lib/image";
+import { getImageUrl, getTMDBImageUrl } from "@/lib/image";
 import ActorsList from "../../../components/common/ActorsList";
 import TextWithTooltip from "@/components/common/TextWithTooltip";
 import SimilarSection from "./components/SimilarSection";
 import MovieInfo from "@/components/common/MovieInfo";
 import { useEffect } from "react";
+import { useDisclosure, useIsMobile } from "@/hooks";
+import VideoPlayer from "@/components/motion/video-wrapper";
+import VideoWrapper from "@/components/motion/video-wrapper";
 
 const MovieDetail = () => {
+    const isMb = useIsMobile()
     const { slug }: { slug: string } = useParams();
     const { data: movie } = useMovieDetailQuery({
         params: {
@@ -24,16 +28,6 @@ const MovieDetail = () => {
             enabled: !!slug
         }
     });
-    const { data: image } = useMovieImagesQuery({
-        params: {
-            slug
-        },
-        options: {
-            enabled: !!slug
-        }
-    },
-    )
-
     const { data: peopleOverview } = useMoviePeoplesQuery({
         params: {
             slug
@@ -61,43 +55,48 @@ const MovieDetail = () => {
     return (
         <section className="flex flex-col min-h-screen">
             {/* Hero Section */}
-            <div className="relative p-8 pt-16 flex flex-col bg-secondary-800 h-[500px]  w-full  overflow-hidden">
+            <div className="relative xl:p-8 p-4 flex flex-col bg-secondary-800 xl:h-[600px] h-[500px] w-full overflow-hidden">
                 {/* Background Image */}
                 {movie?.item?.poster_url && (
                     <div className="absolute inset-0 z-0">
                         <Image
-                            fill
+                            width={1000}
+                            height={1000}
                             priority
                             quality={90}
-                            sizes="100vw"
-                            src={getTMDBImageUrl(image?.images[0]?.file_path!, 'w1280')}
+                            src={getImageUrl(isMb ? movie?.item?.thumb_url : movie?.item?.poster_url)}
                             alt={movie?.item?.name}
-                            className="object-fill"
+                            className="object-cover w-full h-full"
+
                         />
                         <div className="absolute inset-0 bg-linear-to-r from-secondary-700 via-transparent to-secondary-700" />
                     </div>
                 )}
 
                 {/* Content */}
-                <div className="container relative z-10 flex flex-col justify-center h-full xl:pt-28 pt-8 gap-3 xl:px-8! px-0!">
-                    <MovieInfo movie={movie?.item} />
+                <div className="container relative z-10 flex flex-col justify-center h-full xl:pt-28 pt-8 xl:px-8! px-0!">
+                    <div className="flex flex-col gap-4">
+                        <MovieInfo movie={movie?.item} />
 
-                    {/* Action Buttons */}
-                    <div className="flex items-center gap-4">
-                        <Link href={`${ROUTES.XEM_PHIM}/${slug}`}>
-                            <Button className="flex items-center rounded-lg">
-                                <Play size={20} fill="currentColor" />
-                                Xem phim
-                            </Button>
-                        </Link>
-                        <Button className="rounded-lg" variant={'outline'}>
-                            <Play size={20} />
-                            Play Trailer
-                        </Button>
-                        {/* <Button className="rounded-lg" variant={'outline'}>
+                        {/* Action Buttons */}
+                        <div className="flex items-center gap-4">
+                            <Link href={`${ROUTES.XEM_PHIM}/${slug}`}>
+                                <Button className="flex items-center rounded-lg">
+                                    <Play size={20} fill="currentColor" />
+                                    Xem phim
+                                </Button>
+                            </Link>
+                            <VideoWrapper videoUrl={movie?.item?.trailer_url} disabled={!movie?.item?.trailer_url}>
+                                <Button disabled={!movie?.item?.trailer_url} className="rounded-lg" variant={'outline'}>
+                                    <Play size={20} />
+                                    Play Trailer
+                                </Button>
+                            </VideoWrapper>
+                            {/* <Button className="rounded-lg" variant={'outline'}>
                             <Plus size={20} />
                             Add to Watchlist
                         </Button> */}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,12 +104,12 @@ const MovieDetail = () => {
             {/* Content Grid */}
             <div className="container grid grid-cols-1 lg:grid-cols-3 gap-8 xl:mt-12 mt-4">
                 {/* Left Column - Cast & Reviews */}
-                <div className="lg:col-span-2">
+                <div className="lg:col-span-2 col-span-3">
                     <ActorsList peopleOverview={peopleOverview!} />
                 </div>
 
                 {/* Right Column - Similar Movies */}
-                <div className="lg:col-span-1">
+                <div className="lg:col-span-1 col-span-3">
                     <SimilarSection currentMovie={movie?.item} category={movie?.item?.category?.map((x) => x.slug).join(',')} />
                 </div>
             </div>

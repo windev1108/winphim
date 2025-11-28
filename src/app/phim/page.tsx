@@ -8,11 +8,12 @@ import { MAPPING_QUERY_FIELDS } from '@/lib/constants';
 import { calculateTotalPages } from '@/lib/utils';
 import { SortFieldType } from '@/types/common';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const PhimPage = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
+    const [totalPages, setTotalPages] = useState(0)
 
     // Lấy tất cả params từ URL
     const category = searchParams.get('category') ?? ''
@@ -44,12 +45,17 @@ const PhimPage = () => {
         router.push(`?${params.toString()}`)
     }
 
-    const totalPages = data?.params?.pagination?.totalPages
-        ? data?.params?.pagination?.totalPages
-        : calculateTotalPages(
-            data?.params?.pagination?.totalItems!,
-            data?.params?.pagination?.totalItemsPerPage!
-        )
+    useEffect(() => {
+        const totalPageCalculated = data?.params?.pagination?.totalPages
+            ? data?.params?.pagination?.totalPages
+            : calculateTotalPages(
+                data?.params?.pagination?.totalItems!,
+                data?.params?.pagination?.totalItemsPerPage!
+            )
+        if (totalPageCalculated > 0) {
+            setTotalPages(totalPageCalculated)
+        }
+    }, [data?.params?.pagination?.totalPages, data?.params?.pagination?.totalItemsPerPage])
 
 
     useEffect(() => {

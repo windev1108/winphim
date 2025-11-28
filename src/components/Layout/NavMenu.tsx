@@ -17,19 +17,20 @@ import { useIsMobile } from "@/hooks"
 import { ROUTES } from "@/lib/routes"
 import { useCountryListQuery } from "@/api/country"
 import { useGenreListQuery } from "@/api/genre"
-import { createQueryString } from "@/lib/utils"
-import { useRouter } from "next/navigation"
-import { useYearListQuery } from "@/api/years"
+import { cn } from "@/lib/utils"
 
+interface INavMenuProps {
+  direction?: 'row' | 'column'
+}
 
-export default function NavMenu() {
+export default function NavMenu({ direction = 'row' }: INavMenuProps) {
   const isMobile = useIsMobile()
   const { data: country } = useCountryListQuery()
   const { data: genre } = useGenreListQuery()
 
   return (
-    <NavigationMenu viewport={isMobile}>
-      <NavigationMenuList className="flex-wrap">
+    <NavigationMenu viewport={isMobile} className="max-w-full!">
+      <NavigationMenuList className={cn(`max-w-full flex flex-wrap items-center justify-center ${direction === 'column' ? 'flex-col' : 'flex-row'}`)}>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link href={`${ROUTES.PHIM}?category=phim-le`}>Phim lẻ</Link>
@@ -45,9 +46,9 @@ export default function NavMenu() {
             <Link href={`${ROUTES.PHIM}?category=phim-chieu-rap`}>Phim chiếu rạp</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        <NavigationMenuItem className="hidden md:block">
+        <NavigationMenuItem className="md:block hidden">
           <NavigationMenuTrigger>Thể loại</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="border-secondary-700">
             <div className="grid grid-cols-4 w-[500px] gap-4">
               {genre?.items?.map((item) => (
                 <NavigationMenuLink key={item._id} asChild>
@@ -60,9 +61,9 @@ export default function NavMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <NavigationMenuItem className="hidden md:block">
+        <NavigationMenuItem className="md:block hidden">
           <NavigationMenuTrigger>Quốc gia</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="border-secondary-700">
             <div className="grid grid-cols-4 w-[500px] gap-4">
               {country?.items?.map((item) => (
                 <NavigationMenuLink key={item._id} asChild>
@@ -77,25 +78,5 @@ export default function NavMenu() {
 
       </NavigationMenuList>
     </NavigationMenu >
-  )
-}
-
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
-  return (
-    <li {...props}>
-      <NavigationMenuLink asChild>
-        <Link href={href}>
-          <div className="text-sm leading-none font-medium">{title}</div>
-          <p className="text-secondary-800 line-clamp-2 text-sm leading-snug">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
   )
 }

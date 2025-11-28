@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
 import SearchInput from '../common/SearchInput'
 import { useSearchMovieListQuery } from '@/api/movie'
 import useDebounce from '@/hooks/useDebounce'
@@ -6,7 +6,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import MovieCardRow from '../common/MovieCardRow'
 import useClickOutside from '@/hooks/useClickOutside'
 
-const Search = () => {
+
+interface ISearchProps {
+    onClose?: () => void
+}
+
+const Search = forwardRef<HTMLElement, ISearchProps>(({ onClose }, ref) => {
     const [open, setOpen] = useState(false)
     const [keyword, setKeyword] = useState('')
     const debounceKeyword = useDebounce(keyword, 300)
@@ -34,6 +39,7 @@ const Search = () => {
     const handleClear = () => {
         setKeyword('')
         setOpen(false)
+        onClose?.()
     }
 
     // Auto open/close based on search results
@@ -53,7 +59,7 @@ const Search = () => {
                     onClick={handleClickInput}   // ⭐ click input → open
                 >
                     <SearchInput
-                        inputBaseClassName="bg-secondary-800/60!"
+                        inputBaseClassName="md:bg-transparent! bg-secondary-800"
                         containerClassName="w-96"
                         value={keyword}
                         onChangeValue={setKeyword}
@@ -79,6 +85,6 @@ const Search = () => {
             )}
         </Popover>
     )
-}
+})
 
 export default Search

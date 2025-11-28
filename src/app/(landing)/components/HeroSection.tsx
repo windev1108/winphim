@@ -26,12 +26,12 @@ const HeroSection = () => {
 
     if (!currentMovie) {
         return (
-            <div className="relative w-full aspect-390/339 xl:aspect-1600/600 bg-gray-900 animate-pulse" />
+            <div className="relative w-full aspect-500/600 xl:aspect-1600/600 bg-secondary-800 animate-pulse" />
         );
     }
 
     return (
-        <div className="relative w-full aspect-390/339 xl:aspect-1600/600 bg-gray-900 overflow-hidden">
+        <div className="relative w-full aspect-500/600 xl:aspect-1600/600 bg-secondary-800 overflow-hidden">
             {/* Background Image */}
             <AnimatePresence mode="wait">
                 <motion.div

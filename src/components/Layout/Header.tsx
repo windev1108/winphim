@@ -74,7 +74,7 @@ const Header = () => {
           </div>
         </div>
 
-        <Button className="xl:min-w-[146px] min-w-[113px] rounded-full">{'Login'}</Button>
+        <Button className="xl:min-w-[146px] min-w-[113px] rounded-full">{'Đăng nhập'}</Button>
       </div>
     </header>
   );

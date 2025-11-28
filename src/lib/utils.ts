@@ -77,3 +77,35 @@ export function calculateTotalPages(totalItems: number, itemsPerPage: number) {
   }
   return Math.ceil(totalItems / itemsPerPage);
 }
+
+export function getYoutubeEmbedUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+
+    // Case 1: watch?v=VIDEO_ID
+    if (u.pathname === '/watch' && u.searchParams.get('v')) {
+      return `https://www.youtube.com/embed/${u.searchParams.get('v')}`;
+    }
+
+    // Case 2: youtu.be/VIDEO_ID
+    if (u.hostname === 'youtu.be') {
+      const id = u.pathname.slice(1);
+      return `https://www.youtube.com/embed/${id}`;
+    }
+
+    // Case 3: shorts/VIDEO_ID
+    if (u.pathname.startsWith('/shorts/')) {
+      const id = u.pathname.split('/')[2];
+      return `https://www.youtube.com/embed/${id}`;
+    }
+
+    // Case 4: playlist
+    if (u.pathname === '/playlist' && u.searchParams.get('list')) {
+      return `https://www.youtube.com/embed/videoseries?list=${u.searchParams.get('list')}`;
+    }
+
+    return null; // Không phải URL YouTube hợp lệ
+  } catch (e) {
+    return null;
+  }
+}

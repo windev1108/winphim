@@ -12,12 +12,12 @@ const MovieInfo = ({ movie }: IMovieInfoProps) => {
     return (
         <div className='flex flex-col gap-4'>
             <div className="flex flex-col gap-2">
-                <h1 className="text-xl xl:text-2xl font-bold text-white max-w-md leading-tight font-serif">
+                <TextWithTooltip maxLength={90} className="text-xl xl:text-2xl font-bold text-white max-w-md leading-tight font-serif">
                     {movie?.name}
-                </h1>
-                <h3 className="text-base xl:text-sm text-secondary-200 max-w-md  font-serif">
+                </TextWithTooltip>
+                <TextWithTooltip maxLength={80} className="text-base xl:text-sm text-secondary-200 max-w-md">
                     {movie?.origin_name}
-                </h3>
+                </TextWithTooltip>
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
