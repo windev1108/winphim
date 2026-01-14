@@ -14,7 +14,6 @@ import { Bell, FolderHeart, List, Loader2, LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
 import { useProfileQuery } from '@/api/auth/queries';
-import { Icons } from '@/assets/icons';
 
 const AuthSection = () => {
   const { isLogged, user, logout: logoutStore } = useAuth()
@@ -23,7 +22,6 @@ const AuthSection = () => {
   })
   const router = useRouter()
   useProfileQuery()
-
   const handleLogout = async () => {
     try {
       const { message } = await logout()
@@ -44,8 +42,8 @@ const AuthSection = () => {
             <DropdownMenuTrigger>
               <div className='rounded-full bg-secondary-800 flex items-center gap-2 size-9 cursor-pointer'>
                 <Avatar className='bg-primary w-full h-full'>
-                  <AvatarImage src={user?.avatar} alt={user?.name} />
-                  <AvatarFallback className='text-secondary-800'>{`${user?.name?.charAt(0).toUpperCase()}${user?.name?.charAt(1)}`}</AvatarFallback>
+                  <AvatarImage src={user?.avatar} alt={user?.firstName} />
+                  <AvatarFallback className='text-secondary-800'>{`${user?.firstName?.charAt(0).toUpperCase()}${user?.lastName?.charAt(1)}`}</AvatarFallback>
                 </Avatar>
               </div>
             </DropdownMenuTrigger>
