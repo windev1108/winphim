@@ -1,5 +1,6 @@
 import { client } from "../client"
-import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieImagesParams, IMovieListParams, IMovieListResponse, IMoviePeopleParams, IImageOverview, IPeopleOverview, ISearchMovieListParams } from "./types";
+import { server } from "../server";
+import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieImagesParams, IMovieListParams, IMovieListResponse, IMoviePeopleParams, IImageOverview, IPeopleOverview, ISearchMovieListParams, IAddFavoriteMovieParams, IMovie, IRemoveFavoriteMovieParams, IMovieFavorite, IAddCommentParams, IComment, IGetCommentByMovie } from "./types";
 
 
 export const getMovieHomepageRequest = async (): Promise<IMovieHomePageResponse> => {
@@ -60,4 +61,60 @@ export const getMoviePeoplesRequest = async (params: IMoviePeopleParams): Promis
 };
 
 
+
+export const addMovieFavoriteRequest = async (params: IAddFavoriteMovieParams): Promise<IMovie> => {
+    const { data } = await server({
+        url: '/movies/favorite',
+        method: 'POST',
+        data: params
+    });
+    return data?.data
+};
+
+
+export const removeMovieFavoriteRequest = async (params: IRemoveFavoriteMovieParams): Promise<IMovie> => {
+    const { data } = await server({
+        url: '/movies/favorite',
+        method: 'DELETE',
+        data: params
+    });
+    return data?.data
+};
+
+
+export const getMyFavoriteMovies = async (params: IRemoveFavoriteMovieParams): Promise<IMovieFavorite[]> => {
+    const { data } = await server({
+        url: '/movies/mine',
+        method: 'GET',
+    });
+    return data?.data
+};
+
+
+export const addCommentMovieRequest = async (params: IAddCommentParams): Promise<IComment> => {
+    const { data } = await server({
+        url: '/comments',
+        method: 'POST',
+        data: params
+
+    });
+    return data?.data
+};
+
+
+export const deleteCommentMovieRequest = async (params: { id: number }): Promise<IComment> => {
+    const { data } = await server({
+        url: `/comments/${params.id}`,
+        method: 'DELETE',
+    });
+    return data?.data
+}
+
+export const getCommentByMovieRequest = async (params: IGetCommentByMovie): Promise<IComment[]> => {
+    const { data } = await server({
+        url: `/comments/movie/${params.movieId}`,
+        method: 'GET',
+    });
+    return data?.data
+};
 

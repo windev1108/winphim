@@ -1,6 +1,7 @@
 import { IMovieListParams } from "@/api/movie";
-import { server } from "@/api/server";
+import { env } from "@/config/env";
 import { SortFieldType, SortType } from "@/types/common";
+import axios from "axios";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -16,7 +17,8 @@ export async function GET(req: Request) {
       sort_type: searchParams.get('sort_type') as SortType,
       year: searchParams.get('year') || '2025'
     };
-    const { data } = await server({
+    const { data } = await axios({
+      baseURL: env.NEXT_PUBLIC_API_MOVIE_URL,
       url: `/danh-sach/${slug}`,
       method: "GET",
       params,

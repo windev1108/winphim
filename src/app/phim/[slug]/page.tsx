@@ -2,20 +2,19 @@
 import { Play, Plus, Star } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ROUTES } from "@/lib/routes";
-import { useMovieDetailQuery, useMovieImagesQuery, useMoviePeoplesQuery } from "@/api/movie";
-import { getImageUrl, getTMDBImageUrl } from "@/lib/image";
+import { useMovieDetailQuery, useMoviePeoplesQuery } from "@/api/movie";
+import { getImageUrl } from "@/lib/image";
 import ActorsList from "../../../components/common/ActorsList";
 import TextWithTooltip from "@/components/common/TextWithTooltip";
 import SimilarSection from "./components/SimilarSection";
 import MovieInfo from "@/components/common/MovieInfo";
 import { useEffect } from "react";
 import { useDisclosure, useIsMobile } from "@/hooks";
-import VideoPlayer from "@/components/motion/video-wrapper";
 import VideoWrapper from "@/components/motion/video-wrapper";
+import ReviewSection from "@/components/common/ReviewSection";
 
 const MovieDetail = () => {
     const isMb = useIsMobile()
@@ -69,7 +68,11 @@ const MovieDetail = () => {
                             className="object-cover w-full h-full"
 
                         />
-                        <div className="absolute inset-0 bg-linear-to-r from-secondary-700 via-transparent to-secondary-700" />
+                        {/* 4 Corner Vignette Gradient Overlays */}
+                        <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/70 to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-l from-black/50 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-b from-black/50 via-transparent to-transparent" />
                     </div>
                 )}
 
@@ -80,16 +83,16 @@ const MovieDetail = () => {
 
                         {/* Action Buttons */}
                         <div className="flex items-center gap-4">
-                            <Link href={`${ROUTES.XEM_PHIM}/${slug}`}>
-                                <Button className="flex items-center rounded-lg">
-                                    <Play size={20} fill="currentColor" />
-                                    Xem phim
+                            <Link href={`${ROUTES.WATCHING_MOVIE}/${slug}`}>
+                                <Button className="flex items-center rounded-lg text-black">
+                                    <Play size={20} />
+                                    <span>Xem phim</span>
                                 </Button>
                             </Link>
                             <VideoWrapper videoUrl={movie?.item?.trailer_url} disabled={!movie?.item?.trailer_url}>
                                 <Button disabled={!movie?.item?.trailer_url} className="rounded-lg" variant={'outline'}>
                                     <Play size={20} />
-                                    Play Trailer
+                                    Xem Trailer
                                 </Button>
                             </VideoWrapper>
                             {/* <Button className="rounded-lg" variant={'outline'}>
@@ -104,8 +107,9 @@ const MovieDetail = () => {
             {/* Content Grid */}
             <div className="container grid grid-cols-1 lg:grid-cols-3 gap-8 xl:mt-12 mt-4">
                 {/* Left Column - Cast & Reviews */}
-                <div className="lg:col-span-2 col-span-3">
+                <div className="lg:col-span-2 col-span-3 gap-6 flex flex-col">
                     <ActorsList peopleOverview={peopleOverview!} />
+                    <ReviewSection movieId={movie?.item?._id} />
                 </div>
 
                 {/* Right Column - Similar Movies */}

@@ -10,7 +10,7 @@ import { SortFieldType } from '@/types/common';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const PhimPage = () => {
+const MoviePage = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
     const [totalPages, setTotalPages] = useState(0)
@@ -32,7 +32,7 @@ const PhimPage = () => {
             year: year !== 'all' ? year : '',
             page: +currentPage,
             sort_field: MAPPING_QUERY_FIELDS[sortField] as SortFieldType,
-            limit: 16,
+            limit: 32,
         }
     })
 
@@ -67,14 +67,14 @@ const PhimPage = () => {
     return (
         <section className='relative container py-20 min-h-screen'>
             {/* Filter Menu */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4">
                 <h1 className='text-xl font-medium text-primary'>{data?.titlePage ?? ''}</h1>
                 <FilterMenu />
             </div>
             {isFetching ?
                 <MovieListSkeleton />
                 :
-                <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-6">
+                <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 grid-cols-2 xl:gap-6 gap-2">
                     {data?.items?.map((item) => (
                         <MovieCard key={item._id} movie={item} />
                     ))}
@@ -82,7 +82,7 @@ const PhimPage = () => {
             }
             {/* Phân trang */}
             {totalPages > 1 && (
-                <div className='flex items-center justify-center mt-6'>
+                <div className='flex items-center justify-center mt-4'>
                     <PaginationControl
                         isControlByInput
                         totalPages={totalPages}
@@ -105,4 +105,4 @@ const PhimPage = () => {
     )
 }
 
-export default PhimPage
+export default MoviePage

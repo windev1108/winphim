@@ -17,8 +17,10 @@ import { ROUTES } from '@/lib/routes';
 import Image from 'next/image';
 import { getImageUrl } from '@/lib/image';
 import TextWithTooltip from '@/components/common/TextWithTooltip';
+import { useIsMobile } from '@/hooks';
 
 const WatchingPage = () => {
+    const isMb = useIsMobile()
     const { slug }: { slug: string } = useParams();
     const { data } = useMovieDetailQuery({
         params: {
@@ -53,7 +55,7 @@ const WatchingPage = () => {
             <div className="fixed inset-0">
                 <div className="absolute inset-0 bg-background/80 backdrop-blur-md">
                 </div>
-                <Image alt={data?.item?.name} src={getImageUrl(data?.item?.poster_url)} width={1200} height={1000} className='w-full h-full' />
+                <Image alt={data?.item?.name} src={getImageUrl(isMb ? data?.item?.thumb_url : data?.item?.poster_url)} width={1200} height={1000} className='w-full h-full' />
             </div>
             {/* Breadcrumb Navigation */}
             <div className="relative z-10">
@@ -71,7 +73,7 @@ const WatchingPage = () => {
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
-                                <Link href={`${ROUTES.PHIM}?category=${data?.breadCrumb?.[0]?.slug.split('/')[2]}`} className="text-gray-400 hover:text-white transition-colors">
+                                <Link href={`${ROUTES.MOVIE}?category=${data?.breadCrumb?.[0]?.slug.split('/')[2]}`} className="text-gray-400 hover:text-white transition-colors">
                                     {`Phim ${data?.breadCrumb?.[0]?.name.replace('Phim', '')}`}
                                 </Link>
                             </BreadcrumbLink>

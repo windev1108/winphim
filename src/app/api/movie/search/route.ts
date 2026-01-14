@@ -1,17 +1,25 @@
-import { server } from "@/api/server";
+import { ISearchMovieListParams } from "@/api/movie";
+import { env } from "@/config/env";
+import axios from "axios";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  try {
-    const { searchParams } = new URL(req.url);
-    const keyword = searchParams.get('keyword')
-    const { data } = await server({
-      url: `/tim-kiem?keyword=${keyword}`,
-      method: "GET",
-    });
+    try {
+        const { searchParams } = new URL(req.url);
+        const params: ISearchMovieListParams = {
+            limit: searchParams.get('limit') || '10',
+            page: searchParams.get('page') || '1',
+            keyword: searchParams.get('keyword') || '',
+        };
+        const { data } = await axios({
+            baseURL: env.NEXT_PUBLIC_API_MOVIE_URL,
+            url: '/tim-kiem',
+            method: "GET",
+            params
+        });
 
-    return NextResponse.json(data);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+        return NextResponse.json(data);
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 }

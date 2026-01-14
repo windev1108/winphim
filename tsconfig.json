@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "../win-cinema/src/components/ui/scroll-area.tsx"  ],
   "exclude": ["node_modules"]
 }

@@ -1,5 +1,5 @@
 'use client';
-import { IPeopleOverview, useMoviePeoplesQuery } from '@/api/movie';
+import { IPeopleOverview } from '@/api/movie';
 import ProfileCard from '@/components/common/ProfileCard';
 
 interface IActorsListProps {

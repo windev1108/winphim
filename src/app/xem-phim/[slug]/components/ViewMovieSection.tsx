@@ -2,9 +2,7 @@ import { IMovie, IPeopleOverview, MovieType } from '@/api/movie';
 import NotFound from '@/app/not-found';
 import SimilarSection from '@/app/phim/[slug]/components/SimilarSection';
 import ActorsList from '@/components/common/ActorsList';
-import ActorsSection from '@/components/common/ActorsList';
 import MovieInfo from '@/components/common/MovieInfo';
-import TextWithTooltip from '@/components/common/TextWithTooltip';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/lib/routes';
@@ -55,7 +53,7 @@ const ViewMovieSection = ({ variant = 'series', movie, peopleOverview }: ViewMov
                         {variant !== 'single' &&
                             <div className="flex items-center gap-2 flex-wrap xl:max-w-1/2">
                                 {currentServer?.server_data?.map((item) => (
-                                    <Button className='w-8' onClick={() => redirect(`${ROUTES.XEM_PHIM}/${movie?.slug}?ep=${item.slug}`)} variant={item?.slug === epQuery ? 'default' : 'outline'} size={'sm'} key={item.slug}>{item.name}</Button>
+                                    <Button className='w-8' onClick={() => redirect(`${ROUTES.WATCHING_MOVIE}/${movie?.slug}?ep=${item.slug}`)} variant={item?.slug === epQuery ? 'default' : 'outline'} size={'sm'} key={item.slug}>{item.name}</Button>
                                 ))}
                             </div>
                         }
@@ -71,9 +69,7 @@ const ViewMovieSection = ({ variant = 'series', movie, peopleOverview }: ViewMov
                 <div
                     onWheel={(e) => e.stopPropagation()}
                     className={`xl:col-span-2 col-span-10 z-10 backdrop-blur-3xl overflow-y-auto rounded-xl bg-background/50`}
-                    style={{
-                        maxHeight: movieColRef.current?.clientHeight
-                    }}>
+                >
                     <SimilarSection variant='watching' category={movie?.category?.map((x) => x.slug).join(',')} currentMovie={movie} />
                 </div>
             </div >

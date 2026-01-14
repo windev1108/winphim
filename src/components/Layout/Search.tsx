@@ -5,17 +5,19 @@ import useDebounce from '@/hooks/useDebounce'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import MovieCardRow from '../common/MovieCardRow'
 import useClickOutside from '@/hooks/useClickOutside'
+import { useRouter } from 'next/navigation'
+import { ROUTES } from '@/lib/routes'
 
 
 interface ISearchProps {
     onClose?: () => void
 }
 
-const Search = forwardRef<HTMLElement, ISearchProps>(({ onClose }, ref) => {
+const Search = forwardRef<HTMLElement, ISearchProps>(({ onClose }, _ref) => {
     const [open, setOpen] = useState(false)
     const [keyword, setKeyword] = useState('')
     const debounceKeyword = useDebounce(keyword, 300)
-
+    const router = useRouter()
     const triggerRef = useRef<any>(null)
     const contentRef = useRef<any>(null)
 
@@ -36,10 +38,17 @@ const Search = forwardRef<HTMLElement, ISearchProps>(({ onClose }, ref) => {
         }
     }
 
-    const handleClear = () => {
+    const handleClear = (isClose?: boolean) => {
         setKeyword('')
         setOpen(false)
-        onClose?.()
+        if (isClose) {
+            onClose?.()
+        }
+    }
+
+    const handleSearch = () => {
+        handleClear()
+        router.replace(`${ROUTES.SEARCH}?keyword=${keyword}`)
     }
 
     // Auto open/close based on search results
@@ -59,11 +68,12 @@ const Search = forwardRef<HTMLElement, ISearchProps>(({ onClose }, ref) => {
                     onClick={handleClickInput}   // ⭐ click input → open
                 >
                     <SearchInput
-                        inputBaseClassName="md:bg-transparent! bg-secondary-800"
+                        inputBaseClassName="md:bg-secondary-800/80 bg-secondary-800"
                         containerClassName="w-96"
                         value={keyword}
                         onChangeValue={setKeyword}
-                        onClearValue={handleClear}
+                        onClearValue={() => handleClear()}
+                        onSearch={handleSearch}
                     />
                 </div>
             </PopoverTrigger>
@@ -71,13 +81,14 @@ const Search = forwardRef<HTMLElement, ISearchProps>(({ onClose }, ref) => {
             {open && (
                 <PopoverContent
                     ref={contentRef}
+                    onOpenAutoFocus={(e) => e.preventDefault()}
                     onWheel={(e) => e.stopPropagation()}
                     className="p-1 w-96 bg-secondary-800 max-h-120 overflow-y-auto"
                     sideOffset={10}
                     align="start"
                 >
                     {data?.items?.map((item) => (
-                        <div key={item._id} onClick={handleClear}>
+                        <div key={item._id} onClick={() => handleClear(true)}>
                             <MovieCardRow movie={item} size="sm" />
                         </div>
                     ))}

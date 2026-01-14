@@ -18,64 +18,82 @@ import { ROUTES } from "@/lib/routes"
 import { useCountryListQuery } from "@/api/country"
 import { useGenreListQuery } from "@/api/genre"
 import { cn } from "@/lib/utils"
+import { useSearchParams } from "next/navigation"
 
 interface INavMenuProps {
   direction?: 'row' | 'column'
 }
 
+interface NavLinkItem {
+  href: string;
+  label: string;
+}
+
+
+export interface NavLink {
+  href: string;
+  label: string;
+  items?: NavLinkItem[];
+}
+
+
+
+
 export default function NavMenu({ direction = 'row' }: INavMenuProps) {
   const isMobile = useIsMobile()
   const { data: country } = useCountryListQuery()
   const { data: genre } = useGenreListQuery()
+  const searchParams = useSearchParams()
+  const categoryQuery = searchParams.get('category')
+  const genreQuery = searchParams.get('genre')
+  const countryQuery = searchParams.get('country')
+
+  const NAV_LINKS: NavLink[] = [
+    {
+      href: 'phim-le', label: 'Phim lẻ'
+    },
+    { href: 'phim-bo', label: 'Phim bộ' },
+    { href: 'phim-chieu-rap', label: 'Phim chiếu rạp' },
+    {
+      href: '/', label: 'Thể loại', items: genre?.items?.map((x) => ({ href: `?genre=${x.slug}`, label: x.name })) ?? []
+    },
+    {
+      href: '/', label: 'Quốc gia', items: country?.items?.map((x) => ({ href: `?country=${x.slug}`, label: x.name })) ?? []
+    },
+  ];
 
   return (
     <NavigationMenu viewport={isMobile} className="max-w-full!">
       <NavigationMenuList className={cn(`max-w-full flex flex-wrap items-center justify-center ${direction === 'column' ? 'flex-col' : 'flex-row'}`)}>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={`${ROUTES.PHIM}?category=phim-le`}>Phim lẻ</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={`${ROUTES.PHIM}?category=phim-bo`}>Phim bộ</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={`${ROUTES.PHIM}?category=phim-chieu-rap`}>Phim chiếu rạp</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem className="md:block hidden">
-          <NavigationMenuTrigger>Thể loại</NavigationMenuTrigger>
-          <NavigationMenuContent className="border-secondary-700">
-            <div className="grid grid-cols-4 w-[500px] gap-4">
-              {genre?.items?.map((item) => (
-                <NavigationMenuLink key={item._id} asChild>
-                  <Link href={`${ROUTES.PHIM}?genre=${item.slug}`} className="hover:bg-secondary-700">
-                    {item.name}
-                  </Link>
+        {NAV_LINKS.map((item) => (
+          <React.Fragment key={item.label}>
+            {item?.items?.length! > 0 ?
+              <NavigationMenuItem className="md:block hidden">
+                <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
+                <NavigationMenuContent className="border-secondary-700">
+                  <div className="grid grid-cols-4 w-[500px] gap-4">
+                    {item?.items?.map((x) => {
+                      const isActive = x.href.includes(countryQuery! || genreQuery!)
+                      return (
+                        <NavigationMenuLink key={x.href} asChild>
+                          <Link href={`${ROUTES.MOVIE}${x.href}`} className={`hover:bg-secondary-700 ${isActive && 'bg-secondary-800'}`}>
+                            {x.label}
+                          </Link>
+                        </NavigationMenuLink>
+                      )
+                    })}
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              :
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={`${item.href.includes(categoryQuery!) && 'bg-secondary-800! hover:bg-secondary-700!'} ${navigationMenuTriggerStyle()}`}>
+                  <Link href={`${ROUTES.MOVIE}?category=${item.href}`}>{item.label}</Link>
                 </NavigationMenuLink>
-              ))}
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem className="md:block hidden">
-          <NavigationMenuTrigger>Quốc gia</NavigationMenuTrigger>
-          <NavigationMenuContent className="border-secondary-700">
-            <div className="grid grid-cols-4 w-[500px] gap-4">
-              {country?.items?.map((item) => (
-                <NavigationMenuLink key={item._id} asChild>
-                  <Link href={`${ROUTES.PHIM}?country=${item.slug}`} className="hover:bg-secondary-700">
-                    {item.name}
-                  </Link>
-                </NavigationMenuLink>
-              ))}
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
+              </NavigationMenuItem>
+            }
+          </React.Fragment>
+        ))}
       </NavigationMenuList>
     </NavigationMenu >
   )

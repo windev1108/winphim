@@ -22,7 +22,7 @@ const VARIANT_SIZE: Record<CardSize, string> = {
 
 const MovieCardRow = ({ variant = 'view', movie, size }: IMovieCardRowProps) => {
     return (
-        <Link href={`${variant === 'view' ? ROUTES.PHIM : ROUTES.XEM_PHIM}/${movie?.slug}`} className="flex gap-4 hover:bg-secondary-800 p-3 rounded-lg transition-colors cursor-pointer">
+        <Link href={`${variant === 'view' ? ROUTES.MOVIE : ROUTES.WATCHING_MOVIE}/${movie?.slug}`} className="flex gap-4 hover:bg-secondary-800 p-3 rounded-lg transition-colors cursor-pointer">
             <div className={`${VARIANT_SIZE[size]} rounded-lg overflow-hidden bg-secondary-700 shrink-0`}>
                 {movie.thumb_url ? (
                     <Image

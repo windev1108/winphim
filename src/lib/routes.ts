@@ -1,6 +1,8 @@
 export const ROUTES = {
   HOME: '/',
-  PHIM: '/phim',
-  XEM_PHIM: '/xem-phim',
+  MOVIE: '/phim',
+  WATCHING_MOVIE: '/xem-phim',
+  MY_MOVIE: '/phim-cua-toi',
+  SEARCH: '/tim-kiem',
   LOGIN: '/login',
 } as const;

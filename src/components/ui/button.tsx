@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
+import { Loader2 } from "lucide-react"
 
 const buttonVariants = cva(
     "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
@@ -15,7 +16,7 @@ const buttonVariants = cva(
                 outline:
                     "border bg-transparent shadow-xs hover:bg-secondary-600 hover:border-primary-200 hover:text-white dark:bg-input/30 dark:border-primary dark:hover:bg-background/50",
                 secondary:
-                    "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+                    "bg-secondary-800 text-secondary-foreground hover:bg-secondary-800/60",
                 ghost:
                     "hover:bg-secondary-600 hover:text-secondary-600-foreground dark:hover:bg-secondary-600/50",
                 link: "text-primary underline-offset-4 hover:underline",
@@ -48,16 +49,19 @@ function Button({
     className,
     variant,
     size,
+    loading = false,
     asChild = false,
     ...props
 }: React.ComponentProps<"button"> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean
+        loading?: boolean
     }) {
     const [ripples, setRipples] = React.useState<RippleEffect[]>([])
     const buttonRef = React.useRef<HTMLButtonElement>(null)
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        props.onClick?.(e)
         const button = buttonRef.current
         if (!button) return
 
@@ -81,7 +85,6 @@ function Button({
         }, 600)
 
         // Call original onClick if exists
-        props.onClick?.(e)
     }
 
     const Comp: any = asChild ? Slot : motion.button
@@ -97,6 +100,7 @@ function Button({
             {...props}
             onClick={handleClick}
         >
+            {loading && <Loader2 className="animate-spin" />}
             {props.children}
 
             <AnimatePresence>

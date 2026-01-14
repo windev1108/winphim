@@ -1,4 +1,7 @@
+import { ILoginResponse } from '@/api/auth';
+import { AxiosError } from 'axios';
 import { clsx, type ClassValue } from 'clsx';
+import toast from 'react-hot-toast';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -108,4 +111,23 @@ export function getYoutubeEmbedUrl(url: string): string | null {
   } catch (e) {
     return null;
   }
+}
+
+
+export const mappingMovieType = (type: string) => {
+  switch (type) {
+    case 'single':
+      return 'Phim lẻ'
+    case 'series':
+      return 'Phim bộ'
+    case 'tvshows':
+      return 'TV Shows'
+    default:
+      return 'Phim bộ'
+  }
+}
+
+
+export const getMutateError = (error: any) => {
+  toast.error(error.response?.data?.message ?? error.response?.statusText!)
 }

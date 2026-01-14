@@ -11,6 +11,8 @@ import {
 import { ArrowRight, Filter, RefreshCcw } from "lucide-react"
 import { useState } from "react"
 import { useRouter } from 'next/navigation';
+import { useLockScrollBody } from "@/hooks";
+import { ROUTES } from "@/lib/routes";
 
 interface IFormFilter {
     category: string
@@ -54,6 +56,8 @@ export default function FilterMenu() {
 
     const handleClearFilter = () => {
         setFilter(DEFAULT_FILTER_PARAMS)
+        router.replace(ROUTES.MOVIE);
+
     }
 
     const isFiltering = Object.keys(DEFAULT_FILTER_PARAMS).some(
@@ -68,6 +72,7 @@ export default function FilterMenu() {
         { label: 'Mới cập nhật', value: 'newly_updated' },
         { label: 'Điểm IMDb', value: 'imdb' }
     ]
+    useLockScrollBody(open)
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -78,77 +83,80 @@ export default function FilterMenu() {
                 </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="xl:w-6xl w-screen bg-secondary-800 xl:h-auto h-96 overflow-y-auto" sideOffset={10} align="end">
-                <div className="flex flex-col gap-4">
-
-                    {/* Thể loại */}
-                    <div className="grid grid-cols-15 items-start gap-2 border-b border-secondary-700 pb-2">
-                        <span className="xl:col-span-1 col-span-14 whitespace-nowrap text-sm">Thể loại :</span>
-                        <div className="xl:col-span-14 col-span-15 flex items-center gap-2 flex-wrap">
-                            {genres.map((item) => (
-                                <Button
-                                    key={item.slug}
-                                    onClick={() => setFilter((prev) => ({ ...prev, category: item.slug }))}
-                                    size={'xs'}
-                                    variant={filter.category === item.slug ? 'outline' : 'ghost'}
-                                >
-                                    {item.name}
-                                </Button>
-                            ))}
+            <PopoverContent
+                onWheel={(e) => e.stopPropagation()}
+                className="xl:w-6xl w-screen bg-secondary-800 xl:h-auto h-[85vh] overflow-y-auto" sideOffset={10} align="end">
+                <div className="flex xl:flex-col flex-col-reverse gap-4">
+                    <div className="flex flex-col gap-4">
+                        {/* Thể loại */}
+                        <div className="grid grid-cols-15 items-start gap-2 border-b border-secondary-700 pb-2">
+                            <span className="xl:col-span-1 col-span-14 whitespace-nowrap text-sm">Thể loại :</span>
+                            <div className="xl:col-span-14 col-span-15 flex items-center gap-2 flex-wrap">
+                                {genres.map((item) => (
+                                    <Button
+                                        key={item.slug}
+                                        onClick={() => setFilter((prev) => ({ ...prev, category: item.slug }))}
+                                        size={'xs'}
+                                        variant={filter.category === item.slug ? 'outline' : 'ghost'}
+                                    >
+                                        {item.name}
+                                    </Button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Quốc gia */}
-                    <div className="grid grid-cols-15 items-start gap-2 border-b border-secondary-700 pb-2">
-                        <span className="xl:col-span-1 col-span-14 whitespace-nowrap text-sm">Quốc gia :</span>
-                        <div className="xl:col-span-14 col-span-15 flex items-center gap-2 flex-wrap">
-                            {countries.map((item) => (
-                                <Button
-                                    key={item.slug}
-                                    onClick={() => setFilter((prev) => ({ ...prev, country: item.slug }))}
-                                    size={'xs'}
-                                    variant={filter.country === item.slug ? 'outline' : 'ghost'}
-                                >
-                                    {item.name}
-                                </Button>
-                            ))}
+                        {/* Quốc gia */}
+                        <div className="grid grid-cols-15 items-start gap-2 border-b border-secondary-700 pb-2">
+                            <span className="xl:col-span-1 col-span-14 whitespace-nowrap text-sm">Quốc gia :</span>
+                            <div className="xl:col-span-14 col-span-15 flex items-center gap-2 flex-wrap">
+                                {countries.map((item) => (
+                                    <Button
+                                        key={item.slug}
+                                        onClick={() => setFilter((prev) => ({ ...prev, country: item.slug }))}
+                                        size={'xs'}
+                                        variant={filter.country === item.slug ? 'outline' : 'ghost'}
+                                    >
+                                        {item.name}
+                                    </Button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Năm */}
-                    <div className="grid grid-cols-15 items-start gap-2 border-b border-secondary-700 pb-2">
-                        <span className="xl:col-span-1 col-span-14 whitespace-nowrap text-sm">Năm :</span>
-                        <div className="xl:col-span-14 col-span-15 flex items-center gap-2 flex-wrap">
-                            {years.map((item) => (
-                                <Button
-                                    key={item.value}
-                                    onClick={() => setFilter((prev) => ({ ...prev, year: item.value }))}
-                                    size={'xs'}
-                                    variant={filter.year === item.value ? 'outline' : 'ghost'}
-                                >
-                                    {item.label}
-                                </Button>
-                            ))}
+                        {/* Năm */}
+                        <div className="grid grid-cols-15 items-start gap-2 border-b border-secondary-700 pb-2">
+                            <span className="xl:col-span-1 col-span-14 whitespace-nowrap text-sm">Năm :</span>
+                            <div className="xl:col-span-14 col-span-15 flex items-center gap-2 flex-wrap">
+                                {years.map((item) => (
+                                    <Button
+                                        key={item.value}
+                                        onClick={() => setFilter((prev) => ({ ...prev, year: item.value }))}
+                                        size={'xs'}
+                                        variant={filter.year === item.value ? 'outline' : 'ghost'}
+                                    >
+                                        {item.label}
+                                    </Button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Sắp xếp */}
-                    <div className="grid grid-cols-15 items-start gap-2 border-b border-secondary-700 pb-2">
-                        <span className="xl:col-span-1 col-span-14 whitespace-nowrap text-sm">Sắp xếp :</span>
-                        <div className="xl:col-span-14 col-span-15 flex items-center gap-2 flex-wrap">
-                            {sorts.map((item) => (
-                                <Button
-                                    key={item.value}
-                                    onClick={() => setFilter((prev) => ({ ...prev, sort_filed: item.value }))}
-                                    size={'xs'}
-                                    variant={filter.sort_filed === item.value ? 'outline' : 'ghost'}
-                                >
-                                    {item.label}
-                                </Button>
-                            ))}
+                        {/* Sắp xếp */}
+                        <div className="grid grid-cols-15 items-start gap-2 border-b border-secondary-700 pb-2">
+                            <span className="xl:col-span-1 col-span-14 whitespace-nowrap text-sm">Sắp xếp :</span>
+                            <div className="xl:col-span-14 col-span-15 flex items-center gap-2 flex-wrap">
+                                {sorts.map((item) => (
+                                    <Button
+                                        key={item.value}
+                                        onClick={() => setFilter((prev) => ({ ...prev, sort_filed: item.value }))}
+                                        size={'xs'}
+                                        variant={filter.sort_filed === item.value ? 'outline' : 'ghost'}
+                                    >
+                                        {item.label}
+                                    </Button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                     {/* Buttons */}
                     <div className="flex items-center gap-2">
                         <Button onClick={handleFilter}>

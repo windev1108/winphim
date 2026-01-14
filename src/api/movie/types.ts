@@ -1,4 +1,5 @@
 import { ICategory, ICountry, IDataResponse, IListDataResponse, IPaging, SortFieldType, SortType } from "@/types/common"
+import { IUser } from "../auth"
 
 export interface IMovieHomePageResponse extends IListDataResponse<IMovieItem> { }
 
@@ -9,7 +10,7 @@ export interface IMovieListParams extends Partial<IMovieListQuery> {
   slug: string
 };
 
-export interface ISearchMovieListParams {
+export interface ISearchMovieListParams extends IPaging {
   keyword?: string
 }
 
@@ -174,4 +175,43 @@ export interface IPeople {
   character: string
   known_for_department: string
   profile_path: string
+}
+
+
+//  FAVORITE
+
+export interface IAddFavoriteMovieParams extends IMovieFavorite {
+  countryName?: string
+  categoryName?: string
+}
+
+export interface IRemoveFavoriteMovieParams {
+  movieId: number
+}
+
+export interface IMovieFavorite extends Omit<IMovie, 'category' | 'country'> {
+  id: number
+  external_id: string
+  vote_average: number
+  category: string
+  country: string
+}
+
+//  Comments
+
+export interface IAddCommentParams {
+  movieId: string
+  content?: string
+  rating: number // 1-5
+}
+export interface IComment {
+  id: number
+  movieId: string
+  content?: string
+  rating: number
+  user: IUser
+}
+
+export interface IGetCommentByMovie {
+  movieId: string
 }

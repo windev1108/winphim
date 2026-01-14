@@ -8,10 +8,12 @@ import { useIsMd } from '@/hooks/useMediaQuery';
 import { ROUTES } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 import { Icons } from '@/assets/icons';
-import { Button } from '../ui/button';
 import NavMenu from './NavMenu';
 import MenuDrawer from '../common/MenuDrawer';
 import Search from './Search';
+import AuthSection from './AuthSection';
+import { Button } from '../ui/button';
+import { Bell } from 'lucide-react';
 
 const Header = () => {
   const isMd = useIsMd();
@@ -60,8 +62,8 @@ const Header = () => {
             {!isMd && <MenuDrawer opened={visibleMenu} toggle={toggleMenu} />}
 
             <Link href={ROUTES.HOME} onClick={() => visibleMenu && closeMenu()}>
-              <Icons.logo className="xl:block hidden" />
-              <Icons.logoMb className="xl:hidden block" />
+              <Icons.logoText className="xl:block hidden" />
+              <Icons.logo className="xl:hidden block" />
             </Link>
           </div>
 
@@ -72,11 +74,12 @@ const Header = () => {
           <div className="relative flex-1 hidden h-full items-center justify-center gap-8 lg:flex">
             <NavMenu />
           </div>
+
+          <AuthSection />
         </div>
 
-        <Button className="xl:min-w-[146px] min-w-[113px] rounded-full">{'Đăng nhập'}</Button>
       </div>
-    </header>
+    </header >
   );
 };
 

@@ -23,7 +23,7 @@ const VideoWrapper: React.FC<VideoPlayerProps> = ({ children, disabled, title, v
         {children}
       </DialogTrigger>
       {/* Modal Overlay */}
-      <DialogContent className='min-w-[1000px] h-[600px] p-0 rounded-2xl overflow-hidden'>
+      <DialogContent className='xl:min-w-[1000px] min-w-[95vw] aspect-video  p-0 xl:rounded-xl overflow-hidden'>
         <DialogTitle className='sr-only'></DialogTitle>
         {variant === 'video' ?
           <video src={videoUrl} controls autoPlay className='h-full w-full object-cover' />

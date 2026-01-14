@@ -10,8 +10,8 @@ const SkeletonRowSection = ({ variant = 'movie' }: SkeletonRowSectionProps) => {
   return (
     <div className='flex flex-col'>
       <Skeleton className='h-8 w-52 mb-4' />
-      <div className='grid xl:grid-cols-6 grid-cols-3 xl:gap-4 gap-2'>
-        {Array.from({ length: 6 }).map((_, i) => (
+      <div className='grid xl:grid-cols-8 grid-cols-2 xl:gap-5 gap-2'>
+        {Array.from({ length: 8 }).map((_, i) => (
           <Fragment key={i}>
             {variant === 'movie' ?
               <MovieCardSkeleton />

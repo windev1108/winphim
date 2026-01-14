@@ -1,8 +1,8 @@
 import { createQuery } from "@/lib/query";
-import { getMovieDetailRequest, getMovieHomepageRequest, getMovieImagesRequest, getMovieListRequest, getMoviePeoplesRequest, searchMovieListRequest } from "./requests";
-import { useInfiniteQuery, UseQueryOptions } from "@tanstack/react-query";
-import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieListParams, IMovieListResponse, IImageOverview, IMovieImagesParams, IMoviePeopleParams, IPeopleOverview, ISearchMovieListParams } from "./types";
-import { InfiniteQueryOptionsWithoutKeys, UseQueryParams } from "@/types/common";
+import { getMovieDetailRequest, getMovieHomepageRequest, getMovieImagesRequest, getMovieListRequest, getMoviePeoplesRequest, getMyFavoriteMovies, searchMovieListRequest, getCommentByMovieRequest } from "./requests";
+import { UseQueryOptions } from "@tanstack/react-query";
+import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieListParams, IMovieListResponse, IImageOverview, IMovieImagesParams, IMoviePeopleParams, IPeopleOverview, ISearchMovieListParams, IMovie, IMovieFavorite, IComment, IGetCommentByMovie, IAddCommentParams } from "./types";
+import { UseQueryParams } from "@/types/common";
 
 // MOVIE LIST
 export const useMovieHomepageQuery = (options?: UseQueryOptions<IMovieHomePageResponse>) => createQuery({
@@ -43,6 +43,21 @@ export const useMovieImagesQuery = ({ options, params }: UseQueryParams<IMovieIm
 export const useMoviePeoplesQuery = ({ options, params }: UseQueryParams<IMoviePeopleParams, IPeopleOverview>) => createQuery({
   key: "movie/peoples",
   queryFn: getMoviePeoplesRequest,
+  params,
+  options: { staleTime: 5000, ...options }
+});
+
+
+export const useMyFavoriteMoviesQuery = (options?: UseQueryOptions<IMovieFavorite[]>) => createQuery({
+  key: "movie/my-favorites",
+  queryFn: getMyFavoriteMovies,
+  options: { staleTime: 5000, ...options }
+});
+
+
+export const useCommentByMoviesQuery = ({ options, params }: UseQueryParams<IGetCommentByMovie, IComment[]>) => createQuery({
+  key: "movie/comments",
+  queryFn: getCommentByMovieRequest,
   params,
   options: { staleTime: 5000, ...options }
 });

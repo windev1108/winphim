@@ -14,7 +14,8 @@ const CategoryMovieSection = ({ category, title }: MovieCategorySectionProps) =>
     const { ref, isIntersecting } = useIntersection()
     const { data, isFetching } = useMovieListQuery({
         params: {
-            slug: category
+            slug: category,
+            limit: 20
         },
         options: {
             enabled: !!isIntersecting
@@ -26,8 +27,8 @@ const CategoryMovieSection = ({ category, title }: MovieCategorySectionProps) =>
                 <CarouselSkeleton />
                 :
                 <CarouselWithControls
-                    itemsToShow={isMb ? 3 : 6}
-                    gap={isMb ? 8 : 16}
+                    itemsToShow={isMb ? 2 : 7}
+                    gap={isMb ? 8 : 10}
                     title={title}
                     items={data?.items ?? []}
                     titleClassName="xl:text-2xl text-lg italic"

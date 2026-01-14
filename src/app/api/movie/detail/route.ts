@@ -1,11 +1,13 @@
-import { server } from "@/api/server";
+import { env } from "@/config/env";
+import axios from "axios";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const slug = searchParams.get('slug')
-    const { data } = await server({
+    const { data } = await axios({
+      baseURL: env.NEXT_PUBLIC_API_MOVIE_URL,
       url: `/phim/${slug}`,
       method: "GET",
     });

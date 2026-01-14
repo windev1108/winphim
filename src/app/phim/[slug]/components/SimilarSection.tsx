@@ -10,7 +10,7 @@ const SimilarSection = ({ variant = 'view', category, slug = 'phim-moi', current
         params: {
             slug,
             category,
-            limit: 10
+            limit: 9
         }
     })
 
@@ -21,7 +21,7 @@ const SimilarSection = ({ variant = 'view', category, slug = 'phim-moi', current
             <h2 className="text-xl font-semibold mb-2 text-primary">Phim đề xuất</h2>
             <div className="space-y-0">
                 {filterSimilar?.map((movie, idx) => (
-                    <Link href={`${variant === 'view' ? ROUTES.PHIM : ROUTES.XEM_PHIM}/${movie?.slug}`} key={idx} className="flex gap-4 hover:bg-secondary-800/80 p-3 rounded-lg transition-colors cursor-pointer">
+                    <Link href={`${variant === 'view' ? ROUTES.MOVIE : ROUTES.WATCHING_MOVIE}/${movie?.slug}`} key={idx} className="flex gap-4 hover:bg-secondary-800/80 p-3 rounded-lg transition-colors cursor-pointer">
                         <div className="w-20 h-28 rounded-lg overflow-hidden bg-secondary-700 shrink-0">
                             {movie.thumb_url ? (
                                 <Image
