@@ -44,7 +44,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 categoryName: movie?.category[0]?.name
             } as IAddFavoriteMovieParams
             await addMovieFavorite(formData)
-            toast.success('Đã thêm vào phim yêu thích')
+            toast.success('Đã thêm vào danh sách yêu thích')
         } catch (error) {
             getMutateError(error)
         }

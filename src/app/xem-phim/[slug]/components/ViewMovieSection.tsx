@@ -3,6 +3,7 @@ import NotFound from '@/app/not-found';
 import SimilarSection from '@/app/phim/[slug]/components/SimilarSection';
 import ActorsList from '@/components/common/ActorsList';
 import MovieInfo from '@/components/common/MovieInfo';
+import ReviewSection from '@/components/common/ReviewSection';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/lib/routes';
@@ -63,7 +64,10 @@ const ViewMovieSection = ({ variant = 'series', movie, peopleOverview }: ViewMov
                         <MovieInfo movie={movie} />
 
                         <ActorsList peopleOverview={peopleOverview} />
+
+                        <ReviewSection movieId={movie._id} />
                     </div>
+
 
                 </div>
                 <div

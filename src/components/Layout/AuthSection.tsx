@@ -16,12 +16,12 @@ import { ROUTES } from '@/lib/routes';
 import { useProfileQuery } from '@/api/auth/queries';
 
 const AuthSection = () => {
-  const { isLogged, user, logout: logoutStore } = useAuth()
+  const { isLogged, user, logout: logoutStore, token } = useAuth()
   const { mutateAsync: logout, isPending: isLoading } = useMutation({
     mutationFn: logoutRequest
   })
   const router = useRouter()
-  useProfileQuery()
+  useProfileQuery({ enabled: !!token })
   const handleLogout = async () => {
     try {
       const { message } = await logout()
