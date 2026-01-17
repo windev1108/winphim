@@ -1,3 +1,5 @@
+import { ROUTES } from "./routes"
+
 export const BREAKPOINTS = {
     xs: 480,
     sm: 640,
@@ -17,3 +19,5 @@ export const MAPPING_QUERY_FIELDS: Record<string, string> = {
     imdb: 'year'
 
 }
+
+export const PROTECTED_ROUTES = [ROUTES.MY_MOVIE, ROUTES.MY_REVIEWS]

@@ -4,25 +4,30 @@ import AuthDialog from '../dialogs/AuthDialog'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button'
 import { useAuth } from '@/hooks'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { useMutation } from '@tanstack/react-query';
 import { logoutRequest } from '@/api/auth';
 import { getMutateError } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import { FolderHeart, Loader2, LogOut, StarIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
+import { PROTECTED_ROUTES } from '@/lib/constants';
 
 const AuthSection = () => {
-  const { isLogged, user, logout: logoutStore, token } = useAuth()
+  const { isLogged, user, logout: logoutStore } = useAuth()
   const { mutateAsync: logout, isPending: isLoading } = useMutation({
     mutationFn: logoutRequest
   })
+  const pathname = usePathname()
   const router = useRouter()
   const handleLogout = async () => {
     try {
       const { message } = await logout()
       toast.success(message)
+      if (PROTECTED_ROUTES.some((x) => pathname.startsWith(x))) {
+        router.replace(ROUTES.HOME)
+      }
       logoutStore()
     } catch (error) {
       getMutateError(error)
