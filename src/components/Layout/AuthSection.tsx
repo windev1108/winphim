@@ -21,7 +21,9 @@ const AuthSection = () => {
     mutationFn: logoutRequest
   })
   const router = useRouter()
-  useProfileQuery({ enabled: !!token })
+  if (token) {
+    useProfileQuery({ enabled: !!token })
+  }
   const handleLogout = async () => {
     try {
       const { message } = await logout()
