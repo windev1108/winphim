@@ -45,7 +45,8 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
   const registerForm = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -80,9 +81,9 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
 
   const onSignInSubmit = async (data: SignInFormData) => {
     try {
-      const res = await loginMutate(data)
-      setAuth(res.token, res.user)
-      console.log('login res :', res)
+      const { user, sessionId } = await loginMutate(data)
+      setAuth(sessionId, user)
+      console.log({ user, sessionId })
       toast.success('Đăng nhập thành công!')
       handleClear()
     } catch (error) {
@@ -92,8 +93,8 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
 
   const onRegisterSubmit = async (data: RegisterFormData) => {
     try {
-      const { token, user } = await registerMutate(data)
-      setAuth(token, user)
+      const { sessionId, user } = await registerMutate(data)
+      setAuth(sessionId, user)
       toast.success('Đăng ký thành công!')
       handleClear()
     } catch (error) {
@@ -213,16 +214,29 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
               </div>
 
               <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
-                {/* Full Name */}
+                {/* First Name */}
                 <div>
                   <input
-                    {...registerForm.register('name')}
+                    {...registerForm.register('firstName')}
                     type="text"
-                    placeholder="Nhập họ tên của bạn"
+                    placeholder="Nhập tên của bạn"
                     className="w-full bg-zinc-800 text-white px-4 py-3 rounded-lg border border-zinc-700 focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 transition"
                   />
-                  {registerForm.formState.errors.name && (
-                    <p className="text-red-500 text-xs mt-1">{registerForm.formState.errors.name.message}</p>
+                  {registerForm.formState.errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1">{registerForm.formState.errors.firstName.message}</p>
+                  )}
+                </div>
+
+                {/* Last Name */}
+                <div>
+                  <input
+                    {...registerForm.register('lastName')}
+                    type="text"
+                    placeholder="Nhập họ của bạn"
+                    className="w-full bg-zinc-800 text-white px-4 py-3 rounded-lg border border-zinc-700 focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 transition"
+                  />
+                  {registerForm.formState.errors.lastName && (
+                    <p className="text-red-500 text-xs mt-1">{registerForm.formState.errors.lastName.message}</p>
                   )}
                 </div>
 
@@ -298,7 +312,7 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
 
                 {/* Submit Button */}
                 <Button
-
+                  className='w-full'
                   type="submit"
                 >
                   Đăng ký

@@ -18,7 +18,7 @@ export interface ILoginParams extends IRegisterParams {
 export interface ILoginResponse {
   message: string
   user: IUser
-  token: string
+  sessionId: string
 }
 
 export interface IRegisterResponse extends ILoginResponse {

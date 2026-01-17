@@ -33,8 +33,8 @@ export const openGoogleLoginPopup = (): Promise<{
                 // Cleanup
                 window.removeEventListener('message', handler);
                 clearTimeout(timeout);
-                const { token, user } = event.data;
-                useAuthStore.getState().setAuth(token, user);
+                const { sessionId, user } = event.data;
+                useAuthStore.getState().setAuth(sessionId, user);
 
                 // Đóng popup (nếu có thể)
                 try {

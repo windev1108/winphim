@@ -43,7 +43,7 @@ const AuthSection = () => {
               <div className='rounded-full bg-secondary-800 flex items-center gap-2 size-9 cursor-pointer'>
                 <Avatar className='bg-primary w-full h-full'>
                   <AvatarImage src={user?.avatar} alt={user?.firstName} />
-                  <AvatarFallback className='text-secondary-800'>{`${user?.firstName?.charAt(0).toUpperCase()}${user?.lastName?.charAt(1)}`}</AvatarFallback>
+                  <AvatarFallback className='text-secondary-800 uppercase'>{`${user?.firstName?.charAt(0) ?? ''}${user?.lastName?.charAt(0) ?? ''}`}</AvatarFallback>
                 </Avatar>
               </div>
             </DropdownMenuTrigger>
