@@ -19,6 +19,7 @@ export const successInterceptor = (response: any) => {
 export const errorInterceptor = (error: any) => {
   if (error.response?.status === 401) {
     // Token hết hạn hoặc không hợp lệ
+    console.log("Logout token expired")
     useAuthStore.getState().logout();
   }
   return Promise.reject(error);
