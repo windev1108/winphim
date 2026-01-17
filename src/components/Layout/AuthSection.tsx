@@ -4,7 +4,6 @@ import AuthDialog from '../dialogs/AuthDialog'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button'
 import { useAuth } from '@/hooks'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { useMutation } from '@tanstack/react-query';
 import { logoutRequest } from '@/api/auth';
@@ -13,7 +12,6 @@ import toast from 'react-hot-toast';
 import { FolderHeart, Loader2, LogOut, StarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
-import { useProfileQuery } from '@/api/auth/queries';
 
 const AuthSection = () => {
   const { isLogged, user, logout: logoutStore, token } = useAuth()
@@ -21,9 +19,6 @@ const AuthSection = () => {
     mutationFn: logoutRequest
   })
   const router = useRouter()
-  if (token) {
-    useProfileQuery({ enabled: !!token })
-  }
   const handleLogout = async () => {
     try {
       const { message } = await logout()
