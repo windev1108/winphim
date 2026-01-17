@@ -82,7 +82,9 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
   const onSignInSubmit = async (data: SignInFormData) => {
     try {
       const { user, sessionId } = await loginMutate(data)
-      setAuth(sessionId, user)
+      if (sessionId && user) {
+        setAuth(sessionId, user)
+      }
       console.log({ user, sessionId })
       toast.success('Đăng nhập thành công!')
       handleClear()

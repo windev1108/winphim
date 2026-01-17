@@ -38,7 +38,9 @@ export const openGoogleLoginPopup = (): Promise<{
 
                 // Đóng popup (nếu có thể)
                 try {
-                    popup?.close();
+                    if (popup) {
+                        popup?.close();
+                    }
                 } catch (e) {
                     console.log('ℹ️ Could not close popup (COOP policy), it will auto-close');
                 }

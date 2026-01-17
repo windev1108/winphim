@@ -4,7 +4,7 @@ import { InternalAxiosRequestConfig } from 'axios';
 export const requestInterceptor = (config: InternalAxiosRequestConfig) => {
   // Lấy token từ Zustand store
   const token = useAuthStore.getState().token;
-  console.log(' token:', token)
+  console.log({ token })
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
