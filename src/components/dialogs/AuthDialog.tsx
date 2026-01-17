@@ -68,10 +68,7 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
 
   const handleLoginWithGoogle = async () => {
     try {
-      const { sessionId, user } = await openGoogleLoginPopup();
-      console.log('sessionId :', sessionId)
-      console.log('user :', user)
-      setAuth(sessionId, user)
+      await openGoogleLoginPopup();
       handleClear()
       toast.success("Đăng nhập thành công!")
     } catch (error) {

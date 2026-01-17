@@ -10,7 +10,7 @@ import { useMutation } from '@tanstack/react-query';
 import { logoutRequest } from '@/api/auth';
 import { getMutateError } from '@/lib/utils';
 import toast from 'react-hot-toast';
-import { Bell, FolderHeart, List, Loader2, LogOut, StarIcon } from 'lucide-react';
+import { FolderHeart, Loader2, LogOut, StarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
 import { useProfileQuery } from '@/api/auth/queries';
