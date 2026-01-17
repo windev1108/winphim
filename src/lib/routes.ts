@@ -2,6 +2,7 @@ export const ROUTES = {
   HOME: '/',
   MOVIE: '/phim',
   WATCHING_MOVIE: '/xem-phim',
+  MY_REVIEWS: '/danh-gia-cua-toi',
   MY_MOVIE: '/phim-cua-toi',
   SEARCH: '/tim-kiem',
   LOGIN: '/login',

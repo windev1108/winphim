@@ -26,7 +26,7 @@ const CommentCard = ({ comment, refetch }: CommentCardProps) => {
     const isYour = user.id === comment.user?.id
 
     return (
-        <div className="flex gap-4 bg-secondary-800 w-full rounded-xl p-4">
+        <div className="flex gap-4 bg-secondary-800 w-full rounded-xl p-4 border border-secondary-700">
             <Avatar className='w-10 h-10 bg-secondary-800'>
                 <AvatarImage src={comment?.user?.avatar} />
                 <AvatarFallback className='text-xl'>

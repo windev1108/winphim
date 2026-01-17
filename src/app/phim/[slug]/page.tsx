@@ -109,7 +109,7 @@ const MovieDetail = () => {
                 {/* Left Column - Cast & Reviews */}
                 <div className="lg:col-span-2 col-span-3 gap-6 flex flex-col">
                     <ActorsList peopleOverview={peopleOverview!} />
-                    <ReviewSection movieId={movie?.item?._id} />
+                    <ReviewSection movie={movie.item} />
                 </div>
 
                 {/* Right Column - Similar Movies */}

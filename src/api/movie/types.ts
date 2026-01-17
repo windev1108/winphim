@@ -200,18 +200,17 @@ export interface IMovieFavorite extends Omit<IMovie, 'category' | 'country'> {
 //  Comments
 
 export interface IAddCommentParams {
-  movieId: string
+  movieSlug: string
+  movieThumbnail: string
+  movieName: string
   content?: string
   rating: number // 1-5
 }
-export interface IComment {
+export interface IComment extends IAddCommentParams {
   id: number
-  movieId: string
-  content?: string
-  rating: number
   user: IUser
 }
 
 export interface IGetCommentByMovie {
-  movieId: string
+  movieSlug: string
 }

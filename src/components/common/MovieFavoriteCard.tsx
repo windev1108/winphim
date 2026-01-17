@@ -31,16 +31,9 @@ const MovieFavoriteCard = ({ movie }: MovieFavoriteCardProps) => {
         toast.success('Đã xóa khỏi danh sách yêu thích')
     }
 
-    const handleFirstContentClick = () => {
-        router.push(`${ROUTES.MOVIE}/${movie.slug}`)
-    }
-
     return (
         <div className='relative group flex flex-col gap-4'>
-            <div
-                onClick={handleFirstContentClick}
-                className="group relative cursor-pointer xl:h-[300px] h-[200px]"
-            >
+            <div className="group relative rounded-xl overflow-hidden cursor-pointer xl:h-[300px] h-[200px]">
                 <Image
                     width={1000}
                     height={1000}
@@ -125,7 +118,7 @@ const MovieFavoriteCard = ({ movie }: MovieFavoriteCardProps) => {
             </div>
             <Link
                 href={`${ROUTES.MOVIE}/${movie.slug}`}
-                className="flex flex-col items-center rounded-xl"
+                className="flex flex-col items-center"
             >
                 <TextWithTooltip maxLength={18}>
                     {movie.name}

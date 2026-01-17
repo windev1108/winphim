@@ -65,7 +65,7 @@ const ViewMovieSection = ({ variant = 'series', movie, peopleOverview }: ViewMov
 
                         <ActorsList peopleOverview={peopleOverview} />
 
-                        <ReviewSection movieId={movie._id} />
+                        <ReviewSection movie={movie} />
                     </div>
 
 

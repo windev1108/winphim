@@ -50,15 +50,10 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         }
     }
 
-    const handleFirstContentClick = () => {
-        router.push(`${ROUTES.MOVIE}/${movie.slug}`)
-    }
-
     return (
         <div className='relative group flex flex-col gap-4'>
             <div className="flex flex-col bg-secondary-800 h-full w-full z-20 rounded-xl overflow-hidden">
                 <div
-                    onClick={handleFirstContentClick}
                     className="group relative cursor-pointer xl:h-[300px] h-[200px]"
                 >
                     <Image

@@ -27,7 +27,7 @@ const CategoryMovieSection = ({ category, title }: MovieCategorySectionProps) =>
                 <CarouselSkeleton />
                 :
                 <CarouselWithControls
-                    itemsToShow={isMb ? 2 : 7}
+                    itemsToShow={isMb ? 2 : 8}
                     gap={isMb ? 8 : 10}
                     title={title}
                     items={data?.items ?? []}

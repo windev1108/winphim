@@ -10,7 +10,7 @@ import { useMutation } from '@tanstack/react-query';
 import { logoutRequest } from '@/api/auth';
 import { getMutateError } from '@/lib/utils';
 import toast from 'react-hot-toast';
-import { Bell, FolderHeart, List, Loader2, LogOut } from 'lucide-react';
+import { Bell, FolderHeart, List, Loader2, LogOut, StarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
 import { useProfileQuery } from '@/api/auth/queries';
@@ -35,9 +35,9 @@ const AuthSection = () => {
     <div>
       {isLogged ?
         <div className="flex items-center gap-3">
-          <Button variant={'secondary'} size={'icon'}>
+          {/* <Button variant={'secondary'} size={'icon'}>
             <Bell fill='currentColor' />
-          </Button>
+          </Button> */}
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className='rounded-full bg-secondary-800 flex items-center gap-2 size-9 cursor-pointer'>
@@ -50,7 +50,11 @@ const AuthSection = () => {
             <DropdownMenuContent>
               <DropdownMenuItem onClick={() => router.replace(ROUTES.MY_MOVIE)} className='cursor-pointer py-2 px-4'>
                 <FolderHeart />
-                Danh sách yêu thích
+                Kho phim của bạn
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.replace(ROUTES.MY_REVIEWS)} className='cursor-pointer py-2 px-4'>
+                <StarIcon />
+                Đánh giá của bạn
               </DropdownMenuItem>
               <DropdownMenuItem disabled={isLoading} onClick={handleLogout} className='cursor-pointer py-2 px-4'>
                 <LogOut />

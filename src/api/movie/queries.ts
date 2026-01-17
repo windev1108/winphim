@@ -1,5 +1,5 @@
 import { createQuery } from "@/lib/query";
-import { getMovieDetailRequest, getMovieHomepageRequest, getMovieImagesRequest, getMovieListRequest, getMoviePeoplesRequest, getMyFavoriteMovies, searchMovieListRequest, getCommentByMovieRequest } from "./requests";
+import { getMovieDetailRequest, getMovieHomepageRequest, getMovieImagesRequest, getMovieListRequest, getMoviePeoplesRequest, getMyFavoriteMovies, searchMovieListRequest, getCommentByMovieRequest, getMyCommentsRequest } from "./requests";
 import { UseQueryOptions } from "@tanstack/react-query";
 import { IMovieDetailParams, IMovieDetailResponse, IMovieHomePageResponse, IMovieListParams, IMovieListResponse, IImageOverview, IMovieImagesParams, IMoviePeopleParams, IPeopleOverview, ISearchMovieListParams, IMovie, IMovieFavorite, IComment, IGetCommentByMovie, IAddCommentParams } from "./types";
 import { UseQueryParams } from "@/types/common";
@@ -51,6 +51,13 @@ export const useMoviePeoplesQuery = ({ options, params }: UseQueryParams<IMovieP
 export const useMyFavoriteMoviesQuery = (options?: UseQueryOptions<IMovieFavorite[]>) => createQuery({
   key: "movie/my-favorites",
   queryFn: getMyFavoriteMovies,
+  options: { staleTime: 5000, ...options }
+});
+
+
+export const useMyCommentsQuery = (options?: UseQueryOptions<IComment[]>) => createQuery({
+  key: "comments/mine",
+  queryFn: getMyCommentsRequest,
   options: { staleTime: 5000, ...options }
 });
 

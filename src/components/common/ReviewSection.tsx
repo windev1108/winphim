@@ -1,4 +1,4 @@
-import { addCommentMovieRequest, deleteCommentMovieRequest, useCommentByMoviesQuery } from '@/api/movie'
+import { addCommentMovieRequest, deleteCommentMovieRequest, IMovie, useCommentByMoviesQuery } from '@/api/movie'
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Input } from '../ui/input'
@@ -13,17 +13,17 @@ import CommentCard from './CommentCard'
 import { useAuth } from '@/hooks'
 
 interface IReviewSectionProps {
-    movieId: string
+    movie: IMovie
 }
 
-const ReviewSection = ({ movieId }: IReviewSectionProps) => {
+const ReviewSection = ({ movie }: IReviewSectionProps) => {
     const { isLogged } = useAuth()
     const { data: comments, refetch } = useCommentByMoviesQuery({
         params: {
-            movieId
+            movieSlug: movie?.slug
         },
         options: {
-            enabled: !!movieId
+            enabled: !!movie?.slug
         }
     })
     const { mutateAsync, isPending } = useMutation({
@@ -38,7 +38,9 @@ const ReviewSection = ({ movieId }: IReviewSectionProps) => {
         e.preventDefault()
         try {
             await mutateAsync({
-                movieId,
+                movieSlug: movie?.slug,
+                movieThumbnail: movie?.thumb_url,
+                movieName: movie?.name,
                 content: reviewText,
                 rating
             })

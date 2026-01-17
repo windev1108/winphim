@@ -19,7 +19,7 @@ const SearchMoviePage = () => {
         params: {
             keyword: keyword!,
             page: +currentPage,
-            limit: 16
+            limit: 32
         },
         options: {
             enabled: !!keyword,

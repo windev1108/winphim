@@ -82,7 +82,7 @@ export const removeMovieFavoriteRequest = async (params: IRemoveFavoriteMoviePar
 };
 
 
-export const getMyFavoriteMovies = async (params: IRemoveFavoriteMovieParams): Promise<IMovieFavorite[]> => {
+export const getMyFavoriteMovies = async (): Promise<IMovieFavorite[]> => {
     const { data } = await server({
         url: '/movies/mine',
         method: 'GET',
@@ -110,9 +110,27 @@ export const deleteCommentMovieRequest = async (params: { id: number }): Promise
     return data?.data
 }
 
+export const deleteMultipleCommentMovieRequest = async (params: { commentIds: number[] }): Promise<IComment> => {
+    const { data } = await server({
+        url: `/comments/multiple`,
+        method: 'DELETE',
+        data: params
+    });
+    return data?.data
+}
+
 export const getCommentByMovieRequest = async (params: IGetCommentByMovie): Promise<IComment[]> => {
     const { data } = await server({
-        url: `/comments/movie/${params.movieId}`,
+        url: `/comments/movie/${params.movieSlug}`,
+        method: 'GET',
+    });
+    return data?.data
+};
+
+
+export const getMyCommentsRequest = async (): Promise<IComment[]> => {
+    const { data } = await server({
+        url: `/comments/mine`,
         method: 'GET',
     });
     return data?.data
