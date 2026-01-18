@@ -81,11 +81,11 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
 
   const onSignInSubmit = async (data: SignInFormData) => {
     try {
-      const { user, sessionId } = await loginMutate(data)
-      if (sessionId && user) {
-        setAuth(sessionId, user)
+      const { user, token } = await loginMutate(data)
+      if (token && user) {
+        setAuth(token, user)
       }
-      console.log({ user, sessionId })
+      console.log({ user, token })
       toast.success('Đăng nhập thành công!')
       handleClear()
     } catch (error) {
@@ -95,8 +95,8 @@ const AuthDialog = ({ children }: IAuthDialogProps) => {
 
   const onRegisterSubmit = async (data: RegisterFormData) => {
     try {
-      const { sessionId, user } = await registerMutate(data)
-      setAuth(sessionId, user)
+      const { token, user } = await registerMutate(data)
+      setAuth(token, user)
       toast.success('Đăng ký thành công!')
       handleClear()
     } catch (error) {

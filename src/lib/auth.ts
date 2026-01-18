@@ -4,7 +4,7 @@ import { useAuthStore } from '@/store';
 
 export const openGoogleLoginPopup = (): Promise<{
     user: IUser;
-    sessionId: string;
+    token: string;
 }> =>
     new Promise((resolve, reject) => {
         const width = 500;
@@ -33,8 +33,8 @@ export const openGoogleLoginPopup = (): Promise<{
                 // Cleanup
                 window.removeEventListener('message', handler);
                 clearTimeout(timeout);
-                const { sessionId, user } = event.data;
-                useAuthStore.getState().setAuth(sessionId, user);
+                const { token, user } = event.data;
+                useAuthStore.getState().setAuth(token, user);
 
                 // Đóng popup (nếu có thể)
                 try {
