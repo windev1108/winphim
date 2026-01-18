@@ -13,6 +13,7 @@ import { FolderHeart, Loader2, LogOut, StarIcon } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes';
 import { PROTECTED_ROUTES } from '@/lib/constants';
+import { useProfileQuery } from '@/api/auth/queries';
 
 const AuthSection = () => {
   const { isLogged, user, logout: logoutStore } = useAuth()
@@ -21,6 +22,7 @@ const AuthSection = () => {
   })
   const pathname = usePathname()
   const router = useRouter()
+  useProfileQuery({ enabled: !!user.id })
   const handleLogout = async () => {
     try {
       const { message } = await logout()
