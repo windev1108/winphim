@@ -125,7 +125,7 @@ const MovieFavoriteCard = ({ movie }: MovieFavoriteCardProps) => {
                                         </Button>
                                     </Link>
                                 </TooltipWrapper>
-                                <TooltipWrapper content='Thêm vào yêu thích'>
+                                <TooltipWrapper content='Xóa yêu thích'>
                                     <Button
                                         disabled={isPending}
                                         onClick={handleRemoveFavorite}
@@ -133,7 +133,7 @@ const MovieFavoriteCard = ({ movie }: MovieFavoriteCardProps) => {
                                         variant={'outline'}
                                         size={'icon-lg'}
                                     >
-                                        {isPending ? <LoaderIcon /> : <Heart />}
+                                        {isPending ? <LoaderIcon /> : <TrashIcon />}
                                     </Button>
                                 </TooltipWrapper>
                             </div>
