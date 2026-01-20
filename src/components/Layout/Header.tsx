@@ -2,9 +2,9 @@
 
 import { useMotionValueEvent, useScroll } from 'motion/react';
 import Link from 'next/link';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { use, useLayoutEffect, useRef, useState } from 'react';
 import { useDisclosure } from '@/hooks';
-import { useIsMd } from '@/hooks/useMediaQuery';
+import { useIs4xl, useIs5xl, useIsMd, useIsMobile } from '@/hooks/useMediaQuery';
 import { ROUTES } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 import { Icons } from '@/assets/icons';
@@ -16,11 +16,13 @@ import { Button } from '../ui/button';
 import { Bell } from 'lucide-react';
 
 const Header = () => {
-  const isMd = useIsMd();
+  const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleMenu, { close: closeMenu, toggle: toggleMenu }] = useDisclosure(false);
   const { scrollY } = useScroll();
   const lastScroll = useRef(scrollY.get());
+  const is5xl = useIs5xl();
+  const is4xl = useIs4xl();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const prev = lastScroll.current;
@@ -59,21 +61,26 @@ const Header = () => {
 
         <div className="flex items-center gap-10 justify-between w-full flex-1">
           <div className="flex items-center gap-4">
-            {!isMd && <MenuDrawer opened={visibleMenu} toggle={toggleMenu} />}
+            {/* {!isMd && <MenuDrawer opened={visibleMenu} toggle={toggleMenu} />} */}
+            {Boolean(is5xl || is4xl || isMobile) &&
+              <MenuDrawer opened={visibleMenu} toggle={toggleMenu} />
+            }
 
             <Link href={ROUTES.HOME} onClick={() => visibleMenu && closeMenu()}>
-              <Icons.logoText className="xl:block hidden" />
-              <Icons.logo className="xl:hidden block" />
+              <Icons.logoText className="2xl:block hidden" />
+              <Icons.logo className="2xl:hidden block" />
             </Link>
           </div>
 
-          <div className='lg:block hidden'>
+          {!Boolean(is5xl || is4xl || isMobile) &&
             <Search />
-          </div>
+          }
 
-          <div className="relative flex-1 hidden h-full items-center justify-center gap-8 lg:flex">
-            <NavMenu />
-          </div>
+          {!Boolean(is5xl || is4xl || isMobile) &&
+            <div className="relative flex-1 h-full items-center justify-center gap-8">
+              <NavMenu />
+            </div>
+          }
 
           <AuthSection />
         </div>

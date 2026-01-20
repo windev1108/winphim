@@ -7,6 +7,9 @@ export const BREAKPOINTS = {
     lg: 1024,
     xl: 1280,
     '2xl': 1536,
+    '3xl': 1920,
+    '4xl': 2560,
+    '5xl': 3840,
 }
 
 export const IMAGES = {

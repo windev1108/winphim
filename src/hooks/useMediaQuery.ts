@@ -58,6 +58,18 @@ export function useIs2xl() {
   return useMediaQuery(`(min-width: ${BREAKPOINTS["2xl"]}px)`);
 }
 
+export function useIs3xl() {
+  return useMediaQuery(`(min-width: ${BREAKPOINTS["3xl"]}px)`);
+}
+
+export function useIs4xl() {
+  return useMediaQuery(`(min-width: ${BREAKPOINTS["4xl"]}px)`);
+}
+
+export function useIs5xl() {
+  return useMediaQuery(`(min-width: ${BREAKPOINTS["5xl"]}px)`);
+}
+
 export function useIsMobile() {
   return useMediaQuery(`(max-width: ${BREAKPOINTS.md - 1}px)`);
 }
