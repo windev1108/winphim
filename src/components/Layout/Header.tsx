@@ -59,8 +59,8 @@ const Header = () => {
         )}
       >
 
-        <div className="flex items-center gap-10 justify-between w-full flex-1">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center xl:gap-10 md:gap-2 gap-4 justify-between w-full flex-1">
+          <div className="flex items-center gap-2">
             {/* {!isMd && <MenuDrawer opened={visibleMenu} toggle={toggleMenu} />} */}
             {Boolean(is5xl || is4xl || isMobile) &&
               <MenuDrawer opened={visibleMenu} toggle={toggleMenu} />
@@ -77,7 +77,7 @@ const Header = () => {
           }
 
           {!Boolean(is5xl || is4xl || isMobile) &&
-            <div className="relative flex-1 h-full items-center justify-center gap-8">
+            <div className="relative flex-1 h-full items-center justify-center">
               <NavMenu />
             </div>
           }

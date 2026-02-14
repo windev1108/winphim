@@ -71,7 +71,7 @@ export function useIs5xl() {
 }
 
 export function useIsMobile() {
-  return useMediaQuery(`(max-width: ${BREAKPOINTS.md - 1}px)`);
+  return useMediaQuery(`(max-width: ${BREAKPOINTS['xs']}px)`);
 }
 
 export function useIsTablet() {

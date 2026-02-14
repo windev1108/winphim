@@ -69,7 +69,7 @@ const Search = forwardRef<HTMLElement, ISearchProps>(({ onClose }, _ref) => {
                 >
                     <SearchInput
                         inputBaseClassName="md:bg-secondary-800/80 bg-secondary-800"
-                        containerClassName="w-96"
+                        containerClassName="w-full max-w-[8.8rem] lg:max-w-[30rem]"
                         value={keyword}
                         onChangeValue={setKeyword}
                         onClearValue={() => handleClear()}
@@ -83,7 +83,7 @@ const Search = forwardRef<HTMLElement, ISearchProps>(({ onClose }, _ref) => {
                     ref={contentRef}
                     onOpenAutoFocus={(e) => e.preventDefault()}
                     onWheel={(e) => e.stopPropagation()}
-                    className="p-1 w-96 bg-secondary-800 max-h-120 overflow-y-auto"
+                    className="p-1 w-full max-w-[16rem] bg-secondary-800 max-h-120 overflow-y-auto"
                     sideOffset={10}
                     align="start"
                 >

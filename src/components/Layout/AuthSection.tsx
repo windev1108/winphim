@@ -69,7 +69,7 @@ const AuthSection = () => {
         </div>
         :
         <AuthDialog>
-          <Button className="xl:min-w-[146px] min-w-[113px] rounded-full">{'Đăng nhập'}</Button>
+          <Button className="min-w-[96px] xl:min-w-[120px] rounded-full lg:text-base text-xs px-4">{'Đăng nhập'}</Button>
         </AuthDialog>
       }
     </div>

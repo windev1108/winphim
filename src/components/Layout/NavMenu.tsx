@@ -64,19 +64,19 @@ export default function NavMenu({ direction = 'row' }: INavMenuProps) {
 
   return (
     <NavigationMenu viewport={isMobile} className="max-w-full!">
-      <NavigationMenuList className={cn(`max-w-full flex flex-wrap items-center justify-center ${direction === 'column' ? 'flex-col' : 'flex-row'}`)}>
+      <NavigationMenuList className={cn(`max-w-full flex flex-nowrap items-center justify-center ${direction === 'column' ? 'flex-col' : 'flex-row'}`)}>
         {NAV_LINKS.map((item) => (
           <React.Fragment key={item.label}>
             {item?.items?.length! > 0 ?
               <NavigationMenuItem className="md:block hidden">
-                <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
-                <NavigationMenuContent className="border-secondary-700">
-                  <div className="grid grid-cols-4 w-[500px] gap-4">
+                <NavigationMenuTrigger className="lg:text-base text-xs">{item.label}</NavigationMenuTrigger>
+                <NavigationMenuContent className="border-secondary-700 left-1/2 transform -translate-x-1/2">
+                  <div className="grid grid-cols-4 w-[90vw] max-w-[500px] gap-4 mx-auto overflow-visible">
                     {item?.items?.map((x) => {
                       const isActive = x.href.includes(countryQuery! || genreQuery!)
                       return (
                         <NavigationMenuLink key={x.href} asChild>
-                          <Link href={`${ROUTES.MOVIE}${x.href}`} className={`hover:bg-secondary-700 ${isActive && 'bg-secondary-800'}`}>
+                          <Link href={`${ROUTES.MOVIE}${x.href}`} className={`lg:text-base text-xs lg:p-4 md:p-0.5! p-1! hover:bg-secondary-700 ${isActive && 'bg-secondary-800'}`}>
                             {x.label}
                           </Link>
                         </NavigationMenuLink>
@@ -88,7 +88,7 @@ export default function NavMenu({ direction = 'row' }: INavMenuProps) {
               :
               <NavigationMenuItem>
                 <NavigationMenuLink asChild className={`${item.href.includes(categoryQuery!) && 'bg-secondary-800! hover:bg-secondary-700!'} ${navigationMenuTriggerStyle()}`}>
-                  <Link href={`${ROUTES.MOVIE}?category=${item.href}`}>{item.label}</Link>
+                  <Link className="lg:text-base text-xs" href={`${ROUTES.MOVIE}?category=${item.href}`}>{item.label}</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             }

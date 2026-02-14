@@ -31,14 +31,14 @@ const MovieInfo = ({ movie }: IMovieInfoProps) => {
                 <Badge className='text-secondary-700' variant={'gradient'}>
                     {movie?.quality}
                 </Badge>
-                <Badge onClick={() => router.push(`${ROUTES.MOVIE}?category=${movie?.type === 'single' ? 'phim-le' : 'phim-bo'}`)} className='hover:bg-primary hover:text-black cursor-pointer text-white' variant={'outline'}>
+                <Badge onClick={() => router.push(`${ROUTES.MOVIE}?category=${movie?.type === 'single' ? 'phim-le' : 'phim-bo'}`)} className='hover:bg-secondary-500 text-white' variant={'outline'}>
                     {movie?.type === 'single' ? 'Phim lẻ' : 'Phim bộ'}
                 </Badge>
                 <Badge className=' text-white' variant={'outline'}>
                     {movie?.lang}
                 </Badge>
 
-                <Badge onClick={() => router.push(`${ROUTES.MOVIE}?year=${movie?.year}`)} className='hover:bg-primary hover:text-black cursor-pointer text-white' variant={'outline'}>
+                <Badge onClick={() => router.push(`${ROUTES.MOVIE}?year=${movie?.year}`)} className='hover:bg-secondary-500 text-white cursor-pointer' variant={'outline'}>
                     {movie?.year}
                 </Badge>
             </div>
