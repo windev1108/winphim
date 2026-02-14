@@ -13,7 +13,6 @@ import MovieInfo from '@/components/common/MovieInfo';
 const HeroSection = () => {
     const { data } = useMovieHomepageQuery();
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [selectedEpisode, setSelectedEpisode] = useState(1);
     const movies = data?.items?.slice(0, 20) || [];
     const currentMovie = movies[currentIndex];
 

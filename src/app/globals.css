@@ -230,6 +230,38 @@ img {
 
 @media (min-width: 120rem) { /* 3xl */
   .container {
-    max-width: 110rem; /* Keep at 90rem as per your config */
+    max-width: 120rem; /* Keep at 90rem as per your config */
+  }
+}
+
+
+@media (min-width: 130rem) { /* 3xl */
+  .container {
+    max-width: 130rem; /* Keep at 90rem as per your config */
+  }
+}
+
+/* Additional very-large breakpoints for extra-large TVs and displays */
+@media (min-width: 160rem) { /* 2560px */
+  .container {
+    max-width: 160rem; /* 2560px */
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 200rem) { /* 3200px */
+  .container {
+    max-width: 200rem; /* 3200px */
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media (min-width: 240rem) { /* 3840px (4K) and larger */
+  .container {
+    max-width: 240rem; /* 3840px */
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 }

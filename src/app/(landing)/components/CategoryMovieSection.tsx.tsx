@@ -9,12 +9,16 @@ interface MovieCategorySectionProps {
     title: string
 }
 
+
+const categoriesList = ['phim-moi', 'phim-chieu-rap', 'phim-le', 'phim-bo', 'phim-sap-chieu', 'tv-shows']
 const CategoryMovieSection = ({ category, title }: MovieCategorySectionProps) => {
     const isMb = useIsMobile()
     const { ref, isIntersecting } = useIntersection()
     const { data, isFetching } = useMovieListQuery({
         params: {
-            slug: category,
+            slug: categoriesList.includes(category) ? category : '',
+            category: !categoriesList.includes(category) ? category : '',
+            sort_type: 'desc',
             limit: 20
         },
         options: {

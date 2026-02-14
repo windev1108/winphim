@@ -2,6 +2,8 @@ import { IMovie } from '@/api/movie'
 import React from 'react'
 import { Badge } from '../ui/badge'
 import TextWithTooltip from './TextWithTooltip'
+import { useRouter } from 'next/navigation'
+import { ROUTES } from '@/lib/routes'
 
 
 interface IMovieInfoProps {
@@ -9,6 +11,7 @@ interface IMovieInfoProps {
 }
 
 const MovieInfo = ({ movie }: IMovieInfoProps) => {
+    const router = useRouter()
     return (
         <div className='flex flex-col gap-4'>
             <div className="flex flex-col gap-2">
@@ -28,21 +31,21 @@ const MovieInfo = ({ movie }: IMovieInfoProps) => {
                 <Badge className='text-secondary-700' variant={'gradient'}>
                     {movie?.quality}
                 </Badge>
-                <Badge className=' text-white' variant={'outline'}>
+                <Badge onClick={() => router.push(`${ROUTES.MOVIE}?category=${movie?.type === 'single' ? 'phim-le' : 'phim-bo'}`)} className='hover:bg-primary hover:text-black cursor-pointer text-white' variant={'outline'}>
                     {movie?.type === 'single' ? 'Phim lẻ' : 'Phim bộ'}
                 </Badge>
                 <Badge className=' text-white' variant={'outline'}>
                     {movie?.lang}
                 </Badge>
 
-                <Badge className=' text-white' variant={'outline'}>
+                <Badge onClick={() => router.push(`${ROUTES.MOVIE}?year=${movie?.year}`)} className='hover:bg-primary hover:text-black cursor-pointer text-white' variant={'outline'}>
                     {movie?.year}
                 </Badge>
             </div>
             {movie?.country?.length > 0 &&
                 <div className="flex items-center gap-3 flex-wrap">
                     {movie?.country?.map((item) => (
-                        <Badge key={item.id} variant={'outline'} className='text-secondary-100'>
+                        <Badge onClick={() => router.push(`${ROUTES.MOVIE}?country=${item?.slug}`)} key={item.id} variant={'outline'} className='hover:bg-secondary-500 text-secondary-100 cursor-pointer'>
                             {item?.name}
                         </Badge>
                     ))}
@@ -51,7 +54,7 @@ const MovieInfo = ({ movie }: IMovieInfoProps) => {
             {movie?.category?.length > 0 &&
                 <div className="flex items-center gap-3 flex-wrap">
                     {movie?.category?.map((item) => (
-                        <Badge key={item.id} variant={'secondary'}>
+                        <Badge className='hover:bg-secondary-500 cursor-pointer' onClick={() => router.push(`${ROUTES.MOVIE}?genre=${item?.slug}`)} key={item.id} variant={'secondary'}>
                             {item?.name}
                         </Badge>
                     ))}

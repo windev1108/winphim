@@ -1,17 +1,19 @@
 import { Fragment } from 'react/jsx-runtime'
 import { Skeleton } from '../ui/skeleton'
 import MovieCardSkeleton from './MovieCardSkeleton'
+import { useIsMobile } from '@/hooks'
 
 interface SkeletonRowSectionProps {
   variant?: 'movie' | 'actor'
 }
 
 const SkeletonRowSection = ({ variant = 'movie' }: SkeletonRowSectionProps) => {
+  const isMb = useIsMobile()
   return (
     <div className='flex flex-col'>
       <Skeleton className='h-8 w-52 mb-4' />
       <div className='grid xl:grid-cols-8 grid-cols-2 xl:gap-5 gap-2'>
-        {Array.from({ length: 8 }).map((_, i) => (
+        {Array.from({ length: isMb ? 2 : 8 }).map((_, i) => (
           <Fragment key={i}>
             {variant === 'movie' ?
               <MovieCardSkeleton />

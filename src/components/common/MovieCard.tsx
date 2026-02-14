@@ -161,7 +161,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 <TextWithTooltip maxLength={18}>
                     {movie.name}
                 </TextWithTooltip>
-                <TextWithTooltip maxLength={20} className='text-secondary-300 xl:text-sm text-xs'>
+                <TextWithTooltip maxLength={28} className='text-secondary-300 xl:text-sm text-xs'>
                     {movie.origin_name}
                 </TextWithTooltip>
             </div>
