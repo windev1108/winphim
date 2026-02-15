@@ -60,7 +60,7 @@ const MovieInfo = ({ movie }: IMovieInfoProps) => {
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
-                {ratingDisplay !== '0.0' &&
+                {Boolean(ratingDisplay !== '0.0' && ratingDisplay !== 'N/A') &&
                     <Badge className='font-semibold' variant={'outline'}>
                         <span>IMDb</span>
                         <span className='text-white'>{ratingDisplay}</span>
