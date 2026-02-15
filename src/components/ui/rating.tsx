@@ -5,12 +5,14 @@ interface RatingProps {
     quantity?: number
     defaultValue?: number
     className?: string
+    value?: number
     onChange: (val: number) => void
 }
 
-const Rating = ({ quantity = 10, defaultValue = 0, className, onChange }: RatingProps) => {
+const Rating = ({ quantity = 10, defaultValue = 0, className, value, onChange }: RatingProps) => {
     const [rating, setRating] = useState(defaultValue);
     const [hover, setHover] = useState(0);
+    const currentValue = value !== undefined ? value : rating;
 
     const handleRating = (value: number) => {
         setRating(value);
@@ -35,11 +37,11 @@ const Rating = ({ quantity = 10, defaultValue = 0, className, onChange }: Rating
                             className="hidden"
                             name="rating"
                             value={star}
-                            checked={rating === star}
+                            checked={currentValue === star}
                             onChange={() => handleRating(star)}
                         />
                         <svg
-                            className={`size-4 transition-colors ${star <= (hover || rating)
+                            className={`size-4 transition-colors ${star <= (hover || currentValue)
                                 ? 'text-yellow-400 dark:text-yellow-500'
                                 : 'text-gray-300 dark:text-neutral-600'
                                 }`}

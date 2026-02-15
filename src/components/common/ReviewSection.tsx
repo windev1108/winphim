@@ -45,6 +45,8 @@ const ReviewSection = ({ movie }: IReviewSectionProps) => {
                 rating
             })
             toast.success("Thêm bình luận thành công!")
+            setReviewText('')
+            setRating(0)
             refetch()
         } catch (error) {
             getMutateError(error)
@@ -78,7 +80,7 @@ const ReviewSection = ({ movie }: IReviewSectionProps) => {
                         className="w-full"
                     />
                     <Button
-                        disabled={rating <= 0}
+                        disabled={rating <= 0 || isPending}
                         type="submit"
                         loading={isPending}
                         className='max-w-40 self-end'

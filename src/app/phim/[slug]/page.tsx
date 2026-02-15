@@ -8,18 +8,18 @@ import { ROUTES } from "@/lib/routes";
 import { useMovieDetailQuery, useMoviePeoplesQuery } from "@/api/movie";
 import { getImageUrl } from "@/lib/image";
 import ActorsList from "../../../components/common/ActorsList";
-import TextWithTooltip from "@/components/common/TextWithTooltip";
 import SimilarSection from "./components/SimilarSection";
 import MovieInfo from "@/components/common/MovieInfo";
 import { useEffect } from "react";
-import { useDisclosure, useIsMobile } from "@/hooks";
+import { useIsMobile } from "@/hooks";
 import VideoWrapper from "@/components/motion/video-wrapper";
 import ReviewSection from "@/components/common/ReviewSection";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const MovieDetail = () => {
     const isMb = useIsMobile()
     const { slug }: { slug: string } = useParams();
-    const { data: movie } = useMovieDetailQuery({
+    const { data: movie, isFetching } = useMovieDetailQuery({
         params: {
             slug
         },
@@ -43,11 +43,33 @@ const MovieDetail = () => {
         }
     }, [movie?.seoOnPage?.titleHead]);
 
-    if (!movie?.item) {
+    if (!movie?.item || isFetching) {
         return (
-            <section className="container flex flex-col min-h-screen xl:pt-40 pt-20">
-                <div className="animate-pulse">Loading...</div>
-            </section>
+            <section className="flex flex-col min-h-screen">
+                <Skeleton className="relative xl:p-8 p-4 flex flex-col bg-secondary-800 xl:h-[600px] h-[500px] w-full overflow-hidden">
+                </Skeleton>
+                <div className="container grid grid-cols-1 lg:grid-cols-3 gap-8 xl:mt-12 mt-4">
+                    {/* Left Column - Cast & Reviews */}
+                    <div className="lg:col-span-2 col-span-3 gap-6 flex flex-col">
+                        <div className="flex flex-col gap-4">
+                            <Skeleton className="w-40 h-8 rounded-md" />
+                            <Skeleton className="w-2/3 h-36 rounded-md" />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Skeleton className="w-40 h-8 rounded-md" />
+                            <Skeleton className="w-full h-36 rounded-md" />
+                        </div>
+                    </div>
+
+                    {/* Right Column - Similar Movies */}
+                    <div className="lg:col-span-1 col-span-3" >
+                        <div className="flex flex-col gap-4">
+                            <Skeleton className="w-40 h-8 rounded-md" />
+                            <Skeleton className="w-2/3 h-90 rounded-md" />
+                        </div>
+                    </div>
+                </div>
+            </section >
         );
     }
 

@@ -1,4 +1,4 @@
-import { IMovie } from '@/api/movie'
+import { IMovie, useCommentByMoviesQuery } from '@/api/movie'
 import React from 'react'
 import { Badge } from '../ui/badge'
 import TextWithTooltip from './TextWithTooltip'
@@ -12,6 +12,42 @@ interface IMovieInfoProps {
 
 const MovieInfo = ({ movie }: IMovieInfoProps) => {
     const router = useRouter()
+    const { data: comments } = useCommentByMoviesQuery({
+        params: {
+            movieSlug: movie?.slug
+        },
+        options: {
+            enabled: !!movie?.slug
+        }
+    })
+    const ratings: number[] = Array.isArray(comments)
+        ? comments
+            .map((x) => {
+                const n = Number(x?.rating)
+                return isNaN(n) ? undefined : n
+            })
+            .filter((r): r is number => typeof r === 'number')
+        : []
+
+    const commentAvg = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : undefined
+
+    const computedRating = (() => {
+        const imdbVal = Number(movie?.imdb?.vote_average)
+        const tmdbVal = Number(movie?.tmdb?.vote_average)
+
+        if (!isNaN(imdbVal) && imdbVal > 0) return imdbVal
+        if (!isNaN(tmdbVal) && tmdbVal > 0) return tmdbVal
+        if (typeof commentAvg === 'number' && !isNaN(commentAvg)) {
+            // If any comment rating > 5, assume comments are already on a /10 scale;
+            // otherwise assume comments are on a /5 scale and scale to /10.
+            const hasAboveFive = ratings.some((r) => r > 5)
+            return hasAboveFive ? commentAvg : commentAvg * 2
+        }
+
+        return undefined
+    })()
+
+    const ratingDisplay = computedRating != null ? computedRating.toFixed(1) : 'N/A'
     return (
         <div className='flex flex-col gap-4'>
             <div className="flex flex-col gap-2">
@@ -24,10 +60,12 @@ const MovieInfo = ({ movie }: IMovieInfoProps) => {
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
-                <Badge className='font-semibold' variant={'outline'}>
-                    <span>IMDb</span>
-                    <span className='text-white'>{movie?.imdb?.vote_average ? movie?.imdb?.vote_average?.toFixed(1) : movie?.tmdb?.vote_average.toFixed(1)}</span>
-                </Badge>
+                {ratingDisplay !== '0.0' &&
+                    <Badge className='font-semibold' variant={'outline'}>
+                        <span>IMDb</span>
+                        <span className='text-white'>{ratingDisplay}</span>
+                    </Badge>
+                }
                 <Badge className='text-secondary-700' variant={'gradient'}>
                     {movie?.quality}
                 </Badge>

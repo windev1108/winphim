@@ -18,6 +18,7 @@ import Image from 'next/image';
 import { getImageUrl } from '@/lib/image';
 import TextWithTooltip from '@/components/common/TextWithTooltip';
 import { useIsMobile } from '@/hooks';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const WatchingPage = () => {
     const isMb = useIsMobile()
@@ -43,8 +44,20 @@ const WatchingPage = () => {
 
     if (!data?.item) {
         return (
-            <section className="min-h-screen flex items-center justify-center">
-                <div className="animate-pulse text-xl">Loading...</div>
+            <section className="relative container min-h-screen pt-20 ">
+                <div className='flex flex-col'>
+                    <Skeleton className='w-96 h-7' />
+                    <div className="grid grid-cols-10 gap-4 mt-4">
+                        <div className="xl:col-span-8 col-span-10 relative w-full gap-4 flex flex-col" >
+                            <Skeleton className='xl:h-[680px] md:h-[400px] h-[250px] w-full' />
+                            <Skeleton className='h-64 w-full' />
+                        </div>
+                        <div className={`xl:col-span-2 col-span-10 z-10 backdrop-blur-3xl overflow-y-auto rounded-xl bg-background/50`}>
+                            <Skeleton className='h-screen w-full' />
+                        </div>
+                    </div >
+                </div>
+
             </section>
         );
     }

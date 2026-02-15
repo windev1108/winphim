@@ -98,6 +98,7 @@ function Button({
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             {...props}
+            disabled={loading || props.disabled}
             onClick={handleClick}
         >
             {loading && <Loader2 className="animate-spin" />}
